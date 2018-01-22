@@ -1,0 +1,19 @@
+{
+  "name": "ro-admin-api",
+  "version": "1.0.0",
+  "description": "Admin API for admin user interface to setup restaurants, tables, etc..",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/restaurantorder/ro-admin-api.git"
+  },
+  "author": "Henrik Engelbrink",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
