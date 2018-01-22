@@ -14,6 +14,8 @@
   "author": "Henrik Engelbrink",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "realm": "^2.2.4",
+    "uuid":"^3.2.1"
   }
 }

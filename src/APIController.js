@@ -1,8 +1,12 @@
 "use_strict";
 
+const RealmController = require("./RealmController");
+
+
 class APIController {
 
 	constructor() {
+		this.realmController = new RealmController();
 		this.getAccount = this.getAccount.bind(this);
 		this.postAccount = this.postAccount.bind(this);
 		this.putAccount = this.putAccount.bind(this);
@@ -18,16 +22,35 @@ class APIController {
 
 	// Account
 	getAccount(req, res) {
-		this.checkParamsValid(req, res, ["id"], function(req, res) {
-			res.sendStatus(501);
+		this.checkDataIsValid(req, res, req.params, ["id"], function(req, res) {
+			var account = this.realmController.getAccount(req.params.id);
+			if(account) {
+				res.json(account);
+			} else {
+				res.sendStatus(500);
+			}
 		});		
 	};
 	postAccount(req, res) {
-		res.sendStatus(501);
+		var that = this;
+		this.checkDataIsValid(req, res, req.body, ["mail", "password", "firstName", "surname", "street", "postCode", "city", "country"], function(req, res) {
+			var account = that.realmController.createAccount(req.body);
+			if(account) {
+				res.status(200).json(account);
+			} else {
+				res.sendStatus(500);
+			}
+		});
 	};
 	putAccount(req, res) {
-		this.checkParamsValid(req, res, ["id"], function(req, res) {
-			res.sendStatus(501);
+		var that = this;
+		this.checkDataIsValid(req, res, req.params, ["id"], function(req, res) {
+			var account = that.realmController.updateAccount(req.params.id, req.body);
+			if(account) {
+				res.status(200).json(account);
+			} else {
+				res.sendStatus(500);
+			}
 		});	
 	};
 
@@ -36,7 +59,7 @@ class APIController {
 		res.sendStatus(501);
 	};
 	getRestaurant(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId"], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
@@ -44,39 +67,40 @@ class APIController {
 		res.sendStatus(501);
 	};
 	putRestaurant(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId"], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
 
 	// Table
 	getTables(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId"], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
 	getTable(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId", "tableId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId", "tableId"], function(req, res) {
 			res.sendStatus(501);
 		});		
 	};
 	postTable(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId"], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
 	putTable(req, res) {
-		this.checkParamsValid(req, res, ["restaurantId", "tableId"], function(req, res) {
+		this.checkDataIsValid(req, res, req.params, ["restaurantId", "tableId"], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
 
 	// Helper
-	checkParamsValid(req, res, necessaryParams, validCallback) {
+	checkDataIsValid(req, res, data, necessaryParams, validCallback) {
 		var valid = true;
-		for(var param of necessaryParams) {
-			if(!req.params[param]) {
+		for(var item of necessaryParams) {
+			if(!data[item]) {
 				valid = false;
+				console.log("MISSING: " + item);
 				break;
 			}
 		}
@@ -84,10 +108,9 @@ class APIController {
 			if(validCallback) {
 				validCallback(req, res);
 			}
-		}
-		else {
+		} else {
 			res.sendStatus(400);
-		}		
+		}
 	};
 };
 module.exports = APIController;
