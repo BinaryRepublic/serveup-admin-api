@@ -7,22 +7,22 @@ const VoiceDeviceController = require('./controller/VoiceDeviceController');
 
 // Account
 let accountController = new AccountController();
-Router.get('/account/:id', accountController.getAccount);
+Router.get('/account/:accountId', accountController.getAccount);
 Router.post('/account', accountController.postAccount);
-Router.put('/account/:id', accountController.putAccount);
+Router.put('/account/:accountId', accountController.putAccount);
 
 // Restaurant
 let restaurantController = new RestaurantController();
-Router.get('/restaurant/', restaurantController.getRestaurants);
-Router.get('/restaurant/:restaurantId', restaurantController.getRestaurant);
-Router.post('/restaurant/', restaurantController.postRestaurant);
-Router.put('/restaurant/:restaurantId', restaurantController.putRestaurant);
+Router.get('/account/:accountId/restaurant/', restaurantController.getRestaurants);
+Router.get('/account/:accountId/restaurant/:restaurantId', restaurantController.getRestaurant);
+Router.post('/account/:accountId/restaurant/', restaurantController.postRestaurant);
+Router.put('/account/:accountId/restaurant/:restaurantId', restaurantController.putRestaurant);
 
 // VoiceDevice
 let voiceDeviceController = new VoiceDeviceController();
-Router.get('/restaurant/:restaurantId/voiceDevice', voiceDeviceController.getVoiceDevices);
-Router.get('/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
-Router.post('/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
-Router.put('/restaurant/:restaurantId/table/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
+Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.getVoiceDevices);
+Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
+Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
+Router.put('/account/:accountId/restaurant/:restaurantId/table/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
 
 module.exports = Router;

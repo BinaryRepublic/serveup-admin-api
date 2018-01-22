@@ -11,18 +11,22 @@ class RestaurantController extends APIController {
 		this.putRestaurant = this.putRestaurant.bind(this);
 	};
 	getRestaurants(req, res) {
-		res.sendStatus(501);
+		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
+			res.sendStatus(501);
+		});
 	};
 	getRestaurant(req, res) {
-		this.checkDataIsValid(req, res, req.params, ['restaurantId'], function(req, res) {
+		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId', 'restaurantId'], function(req, res) {
 			res.sendStatus(501);
-		});	
+		});
 	};
 	postRestaurant(req, res) {
-		res.sendStatus(501);
+		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
+			res.sendStatus(501);
+		});
 	};
 	putRestaurant(req, res) {
-		this.checkDataIsValid(req, res, req.params, ['restaurantId'], function(req, res) {
+		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId', 'restaurantId'], function(req, res) {
 			res.sendStatus(501);
 		});	
 	};
