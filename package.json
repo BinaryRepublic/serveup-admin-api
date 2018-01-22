@@ -4,7 +4,7 @@
   "description": "Admin API for admin user interface to setup restaurants, tables, etc..",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "pm2 start app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,5 +17,8 @@
     "express": "^4.16.2",
     "realm": "^2.2.4",
     "uuid":"^3.2.1"
+  },
+  "devDependencies": {
+    "pm2":"^2.9.2"    
   }
 }

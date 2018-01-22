@@ -1,7 +1,7 @@
-"use_strict"
+'use_strict'
 
 const uuidv4 = require('uuid/v4');
-const ParentRealmController = require("../ro-realm/ParentRealmController");
+const ParentRealmController = require('../../ro-realm/ParentRealmController');
 
 class RealmController extends ParentRealmController {
 	constructor() {
@@ -20,12 +20,12 @@ class RealmController extends ParentRealmController {
 	createAccount(accountObj) {
 		accountObj.id = uuidv4();
 		accountObj.created = new Date();
-		var account = this.writeObject("Account", accountObj, false);
+		var account = this.writeObject('Account', accountObj, false);
 		return account;
 	};
 	updateAccount(id, newData) {
 		newData.id = id;
-		var account = this.writeObject("Account", newData, true);
+		var account = this.writeObject('Account', newData, true);
 		return account;
 	}
 
@@ -37,8 +37,8 @@ class RealmController extends ParentRealmController {
 				created = this.realm.create(className, obj, update);
 			});
 		} catch (e) {
-			console.log("Error on creation: " + e);
-			console.log(className + " -> " + JSON.stringify(obj));
+			console.log('Error on creation: ' + e);
+			console.log(className + ' -> ' + JSON.stringify(obj));
 		}
 		return created;
 	}

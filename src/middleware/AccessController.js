@@ -1,4 +1,4 @@
-"use_strict";
+'use_strict';
 
 class AccessController {
 	access(req, res, next) {
