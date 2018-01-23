@@ -10,36 +10,44 @@ class AccountController extends APIController {
 		this.putAccount = this.putAccount.bind(this);
 	};
 	getAccount(req, res) {
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
-			var account = this.realmController.getAccount(req.params.id);
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+		if(validParams) {
+			var account = this.realmController.getAccount(req.params.accountId);
 			if(account) {
 				res.json(account);
 			} else {
 				res.sendStatus(500);
 			}
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 	postAccount(req, res) {
-		var that = this;
-		this.requestValidator.checkDataIsValid(req, res, req.body, ['mail', 'password', 'firstName', 'surname', 'street', 'postCode', 'city', 'country'], function(req, res) {
-			var account = that.realmController.createAccount(req.body);
+		var params = ['mail', 'password', 'firstName', 'surname', 'street', 'postCode', 'city', 'country'];
+		var validBody = this.requestValidator.validRequestData(req.body, params);
+		if(validBody) {
+			var account = this.realmController.createAccount(req.body);
 			if(account) {
 				res.json(account);
 			} else {
 				res.sendStatus(500);
 			}
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 	putAccount(req, res) {
-		var that = this;
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
-			var account = that.realmController.updateAccount(req.params.id, req.body);
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+		if(validParams) {
+			var account = this.realmController.updateAccount(req.params.accountId, req.body);
 			if(account) {
 				res.json(account);
 			} else {
 				res.sendStatus(500);
 			}
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 }
 module.exports = AccountController;

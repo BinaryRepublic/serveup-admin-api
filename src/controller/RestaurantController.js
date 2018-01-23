@@ -11,24 +11,37 @@ class RestaurantController extends APIController {
 		this.putRestaurant = this.putRestaurant.bind(this);
 	};
 	getRestaurants(req, res) {
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+		if(validParams) {
 			res.sendStatus(501);
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 	getRestaurant(req, res) {
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId', 'restaurantId'], function(req, res) {
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
+		if(validParams) {
 			res.sendStatus(501);
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 	postRestaurant(req, res) {
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId'], function(req, res) {
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+		var validBody = this.requestValidator.validRequestData(req.body, ['']);
+		if(validParams && validBody) {
 			res.sendStatus(501);
-		});
+		} else {
+			res.sendStatus(400);
+		};
 	};
 	putRestaurant(req, res) {
-		this.requestValidator.checkDataIsValid(req, res, req.params, ['accountId', 'restaurantId'], function(req, res) {
+		var validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
+		if(validParams) {
 			res.sendStatus(501);
-		});	
+		} else {
+			res.sendStatus(400);
+		};
 	};
 }
 module.exports = RestaurantController;
