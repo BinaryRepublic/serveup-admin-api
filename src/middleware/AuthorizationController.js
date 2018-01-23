@@ -2,16 +2,20 @@
 
 class AuthorizationController {
 	authorization(req, res, next) {
-		var accountId = req.params.accountId;
-		if(accountId) {
-			// Check token and accountId
-			if(true) {
-				next();
+		var accountStr = '/account/'
+		if(req.originalUrl.includes(accountStr)) {
+			var accountId = req.originalUrl.substring(accountStr.length, req.originalUrl.length);
+			if(accountId) {
+				// Check token and accountId
+				if(true) {
+					next();
+				} else {
+					res.sendStatus(403);
+				}
 			} else {
-				res.sendStatus(403);
+				next();
 			}
-		}
-		else {
+		} else {
 			next();
 		}
 	}

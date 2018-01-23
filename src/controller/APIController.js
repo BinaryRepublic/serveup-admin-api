@@ -1,12 +1,17 @@
 'use_strict'
 
-const RealmController = require('./RealmController');
 const RequestValidator = require('./RequestValidator');
 
 class APIController {
 	constructor() {
-		this.realmController = new RealmController();
 		this.requestValidator = new RequestValidator();
 	};
+	handleResponse(res, jsonObject) {
+		if(jsonObject) {
+			res.json(jsonObject);
+		} else {
+			res.sendStatus(500);
+		}
+	}
 }
 module.exports = APIController;
