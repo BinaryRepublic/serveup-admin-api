@@ -3,7 +3,8 @@
 class RequestValidator {
 	validRequestData(data, necessaryData) {
 		var valid = true;
-		for(var item in necessaryData) {
+		for(var i = 0; i < necessaryData.length; i++) {
+			var item = necessaryData[i];
 			if (!data.hasOwnProperty(item)) {
 				valid = false;
 				console.error("MISSING: " + item);
