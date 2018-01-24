@@ -4,6 +4,7 @@ const Router = require('express').Router();
 const AccountController = require('./controller/AccountController');
 const RestaurantController = require('./controller/RestaurantController');
 const VoiceDeviceController = require('./controller/VoiceDeviceController');
+const FileController = require('./controller/FileController');
 
 // Account
 let accountController = new AccountController();
@@ -24,5 +25,9 @@ Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDevi
 Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
 Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
 Router.put('/account/:accountId/restaurant/:restaurantId/table/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
+
+// Realm File Upload
+let fileController = new FileController();
+Router.post('/upload', fileController.uploadRequest);
 
 module.exports = Router;
