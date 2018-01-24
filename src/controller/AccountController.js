@@ -1,7 +1,7 @@
 'use_strict'
 
 const APIController = require('./APIController');
-const RealmAccountController = require('../../ro-realm/APIController');
+const RealmAccountController = require('../../ro-realm/controller/RealmAccountController');
 
 class AccountController extends APIController {
 	constructor() {
@@ -13,31 +13,25 @@ class AccountController extends APIController {
 	};
 	getAccount(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
-		if(validParams) {
-			let account = this.realmController.getAccount(req.params.accountId);
-			this.handleResponse(res, account);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.getAccount(req.params.accountId);
+		}, res);
 	};
 	postAccount(req, res) {
-		let params = ['mail', 'password', 'firstName', 'surname', 'street', 'postCode', 'city', 'country'];
-		let validBody = this.requestValidator.validRequestData(req.body, params);
-		if(validBody) {
-			let account = this.realmController.createAccount(req.body);
-			this.handleResponse(res, account);
-		} else {
-			res.sendStatus(400);
-		};
+		let properties = ['mail', 'password', 'firstName', 'surname', 'street', 'postCode', 'city', 'country'];
+		let validBody = this.requestValidator.validRequestData(req.body, properties);
+		let that = this;
+		this.handleRequest(validBody, function() {
+			return that.realmController.createAccount(req.body);
+		}, res);
 	};
 	putAccount(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
-		if(validParams) {
-			let account = this.realmController.updateAccount(req.params.accountId, req.body);
-			this.handleResponse(res, account);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.updateAccount(req.params.accountId, req.body);
+		}, res);
 	};
 }
 module.exports = AccountController;

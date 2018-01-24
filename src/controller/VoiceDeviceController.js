@@ -1,7 +1,7 @@
 'use_strict'
 
 const APIController = require('./APIController');
-const RealmVoiceDeviceController = require('../../ro-realm/RealmVoiceDeviceController');
+const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
 class VoiceDeviceController extends APIController {
 	constructor() {
@@ -14,40 +14,33 @@ class VoiceDeviceController extends APIController {
 	};
 	getVoiceDevices(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
-		if(validParams) {
-			let voiceDevices = this.realmController.getVoiceDevices(req.params.restaurantId);
-			this.handleResponse(res, voiceDevices);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.getVoiceDevices(req.params.restaurantId);
+		}, res);
 	};
 	getVoiceDevice(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
-		if(validParams) {
-			let voiceDevice = this.realmController.getVoiceDevice(req.params.voiceDeviceId);
-			this.handleResponse(res, voiceDevice);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.getVoiceDevice(req.params.voiceDeviceId);
+		}, res);
 	};
 	postVoiceDevice(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
 		let validBody = this.requestValidator.validRequestData(req.body, ['name']);
-		if(validParams && validBody) {
-			let newRestaurant = this.realmController.createVoiceDevice(req.params.restaurantId, req.body);
-			this.handleResponse(res, newRestaurant);
-		} else {
-			res.sendStatus(400);
-		};
+		let validRequest = validParams && validBody;
+		let that = this;
+		this.handleRequest(validRequest, function() {
+			return that.realmController.createVoiceDevice(req.params.restaurantId, req.body);
+		}, res);
 	};
 	putVoiceDevice(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
-		if(validParams) {
-			let updatedVoiceDevice = this.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body);
-			this.handleResponse(res, updatedVoiceDevice);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body);
+		}, res);
 	};
 }
 module.exports = VoiceDeviceController;

@@ -1,7 +1,7 @@
 'use_strict'
 
 const APIController = require('./APIController');
-const RealmRestaurantController = require('../../ro-realm/APIController');
+const RealmRestaurantController = require('../../ro-realm/controller/RealmRestaurantController');
 
 class RestaurantController extends APIController {
 	constructor() {
@@ -14,40 +14,33 @@ class RestaurantController extends APIController {
 	};
 	getRestaurants(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
-		if(validParams) {
-			let restaurants = this.realmController.getRestaurants(req.params.accountId);
-			this.handleResponse(res, restaurants);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.getRestaurants(req.params.accountId);
+		}, res);
 	};
 	getRestaurant(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
-		if(validParams) {
-			let restaurant = this.realmController.getRestaurant(req.params.restaurantId);
-			this.handleResponse(res, restaurant);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.getRestaurant(req.params.restaurantId);
+		}, res);
 	};
 	postRestaurant(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
 		let validBody = this.requestValidator.validRequestData(req.body, ['name']);
-		if(validParams && validBody) {
-			let newRestaurant = this.realmController.createRestaurant(req.params.accountId, req.body);
-			this.handleResponse(res, newRestaurant);
-		} else {
-			res.sendStatus(400);
-		};
+		let validRequest = validParams && validBody;
+		let that = this;
+		this.handleRequest(validRequest, function() {
+			return that.realmController.createRestaurant(req.params.accountId, req.body);
+		}, res);
 	};
 	putRestaurant(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
-		if(validParams) {
-			let updatedRestaurant = this.realmController.updateRestaurant(req.params.restaurantId, req.body);
-			this.handleResponse(res, updatedRestaurant);
-		} else {
-			res.sendStatus(400);
-		};
+		let that = this;
+		this.handleRequest(validParams, function() {
+			return that.realmController.updateRestaurant(req.params.restaurantId, req.body);
+		}, res);
 	};
 }
 module.exports = RestaurantController;
