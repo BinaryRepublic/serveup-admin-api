@@ -26,6 +26,7 @@ Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDevic
 Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
 Router.put('/account/:accountId/restaurant/:restaurantId/table/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
 
+
 // Realm File Upload
 let fileController = new FileController();
 Router.post('/upload', fileController.uploadRequest);
