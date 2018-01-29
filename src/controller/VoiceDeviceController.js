@@ -13,21 +13,21 @@ class VoiceDeviceController extends APIController {
 		this.putVoiceDevice = this.putVoiceDevice.bind(this);
 	};
 	getVoiceDevices(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
+		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
 			return that.realmController.getVoiceDevices(req.params.restaurantId);
 		}, res);
 	};
 	getVoiceDevice(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
+		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId', 'voiceDeviceId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
 			return that.realmController.getVoiceDevice(req.params.voiceDeviceId);
 		}, res);
 	};
 	postVoiceDevice(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
+		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
 		let validBody = this.requestValidator.validRequestData(req.body, ['name']);
 		let validRequest = validParams && validBody;
 		let that = this;
@@ -36,7 +36,7 @@ class VoiceDeviceController extends APIController {
 		}, res);
 	};
 	putVoiceDevice(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
+		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId', 'voiceDeviceId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
 			return that.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body);

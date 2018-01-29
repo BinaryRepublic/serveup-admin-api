@@ -36,7 +36,7 @@ class RestaurantController extends APIController {
 		}, res);
 	};
 	putRestaurant(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
+		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
 			return that.realmController.updateRestaurant(req.params.restaurantId, req.body);
