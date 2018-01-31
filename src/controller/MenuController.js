@@ -21,14 +21,6 @@ class MenuController extends APIController {
 			return that.realmController.getMenuById(req.params.menuId);
 		}, res);
 	};
-	getMenus(req, res) {
-		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
-		let that = this;
-		this.handleRequest(validParams, function() {
-			let restaurant = that.realmRestaurantController.getRestaurant(req.params.restaurantId);
-			return restaurant.menus;
-		}, res);
-	};
 	postMenu(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.body, ['accountId', 'restaurantId']);
 		let properties = ['name', 'drinks', 'defaultParents'];

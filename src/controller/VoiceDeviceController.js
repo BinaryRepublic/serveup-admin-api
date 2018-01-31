@@ -16,14 +16,14 @@ class VoiceDeviceController extends APIController {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
-			return that.realmController.getVoiceDevices(req.params.restaurantId);
+			return that.realmController.getVoiceDevicesByRestaurantId(req.params.restaurantId);
 		}, res);
 	};
 	getVoiceDevice(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId', 'voiceDeviceId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
-			return that.realmController.getVoiceDevice(req.params.voiceDeviceId);
+			return that.realmController.getVoiceDeviceById(req.params.voiceDeviceId);
 		}, res);
 	};
 	postVoiceDevice(req, res) {

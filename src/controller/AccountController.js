@@ -15,7 +15,7 @@ class AccountController extends APIController {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
-			return that.realmController.getAccount(req.params.accountId);
+			return that.realmController.getAccountById(req.params.accountId);
 		}, res);
 	};
 	postAccount(req, res) {
@@ -23,7 +23,8 @@ class AccountController extends APIController {
 		let validBody = this.requestValidator.validRequestData(req.body, properties);
 		let that = this;
 		this.handleRequest(validBody, function() {
-			return that.realmController.createAccount(req.body);
+			let account =  that.realmController.createAccount(req.body);
+			return account
 		}, res);
 	};
 	putAccount(req, res) {

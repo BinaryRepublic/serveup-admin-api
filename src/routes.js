@@ -27,9 +27,8 @@ Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDevic
 Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
 Router.put('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
 
-// VoiceDevice
+// Menu
 let menuController = new MenuController();
-Router.get('/account/:accountId/restaurant/:restaurantId/menu', menuController.getMenus);
 Router.get('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.getMenu);
 Router.post('/account/:accountId/restaurant/:restaurantId/menu', menuController.postMenu);
 Router.put('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.putMenu);

@@ -16,14 +16,14 @@ class RestaurantController extends APIController {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
-			return that.realmController.getRestaurants(req.params.accountId);
+			return that.realmController.getRestaurantsByAccountId(req.params.accountId);
 		}, res);
 	};
 	getRestaurant(req, res) {
 		let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
 		let that = this;
 		this.handleRequest(validParams, function() {
-			return that.realmController.getRestaurant(req.params.restaurantId);
+			return that.realmController.getRestaurantById(req.params.restaurantId);
 		}, res);
 	};
 	postRestaurant(req, res) {
