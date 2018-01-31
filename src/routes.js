@@ -33,7 +33,7 @@ Router.get('/account/:accountId/restaurant/:restaurantId/menu', menuController.g
 Router.get('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.getMenu);
 Router.post('/account/:accountId/restaurant/:restaurantId/menu', menuController.postMenu);
 Router.put('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.putMenu);
-Router.put('/account/:accountId/restaurant/:restaurantId/menu/:menuId/validate', menuController.validateMenu);
+Router.post('/account/:accountId/restaurant/:restaurantId/menu/:menuId/validate', menuController.validateMenu);
 
 // Realm File Upload
 let fileController = new FileController();
