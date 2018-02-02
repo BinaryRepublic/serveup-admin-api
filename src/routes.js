@@ -5,7 +5,6 @@ const AccountController = require('./controller/AccountController');
 const RestaurantController = require('./controller/RestaurantController');
 const MenuController = require('./controller/MenuController');
 const VoiceDeviceController = require('./controller/VoiceDeviceController');
-const MenuController = require('./controller/MenuController');
 const FileController = require('./controller/FileController');
 
 // Account
@@ -39,13 +38,6 @@ Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDevi
 Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
 Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
 Router.put('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
-
-// Menu
-let menuController = new MenuController();
-Router.get('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.getMenu);
-Router.post('/account/:accountId/restaurant/:restaurantId/menu', menuController.postMenu);
-Router.put('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.putMenu);
-Router.post('/account/:accountId/restaurant/:restaurantId/menu/:menuId/validate', menuController.validateMenu);
 
 // Realm File Upload
 let fileController = new FileController();
