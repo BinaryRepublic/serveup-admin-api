@@ -3,11 +3,18 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const promBundle = require('express-prom-bundle');
+const metricsMiddleware = promBundle({
+    includeStatusCode: true,
+    includeMethod: true,
+    includePath: true
+});
 const AccessController = require('./src/middleware/AccessController.js');
 let accessController = new AccessController();
 const AuthorizationController = require('./src/middleware/AuthorizationController.js');
 let authorizationController = new AuthorizationController();
 
+app.use(metricsMiddleware);
 app.use('/', accessController.access);
 app.use('/', authorizationController.authorization);
 app.use(bodyParser.json());
