@@ -2,11 +2,17 @@
 
 const APIController = require('./APIController');
 const RealmAccountController = require('../../ro-realm/controller/RealmAccountController');
+const RealmRestaurantController = require('../../ro-realm/controller/RealmRestaurantController');
+const RealmMenuController = require('../../ro-realm/controller/RealmMenuController');
+const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
 class AccountController extends APIController {
     constructor () {
         super();
         this.realmController = new RealmAccountController();
+        this.realmRestaurantController = new RealmRestaurantController();
+        this.realmMenuController = new RealmMenuController();
+        this.realmVoiceDeviceController = new RealmVoiceDeviceController();
         this.getAccounts = this.getAccounts.bind(this);
         this.getAccountById = this.getAccountById.bind(this);
         this.postAccount = this.postAccount.bind(this);
@@ -44,7 +50,24 @@ class AccountController extends APIController {
     deleteAccount (req, res) {
         let that = this;
         this.handleRequest([], function () {
-            return that.realmController.deleteAccount(req.params.accountId);
+            let accountId = req.params.accountId;
+            // delete restaurants
+            let restaurants = that.realmRestaurantController.getRestaurantsByAccountId(accountId);
+            restaurants = that.realmRestaurantController.formatRealmObj(restaurants);
+            restaurants.forEach((restaurant) => {
+                // delete menus
+                let menus = that.realmMenuController.getMenuByRestaurantId(restaurant.id);
+                menus.forEach((menu) => {
+                    that.realmMenuController.deleteMenu(menu.id);
+                });
+                // delete voice devices
+                let voiceDevices = that.realmVoiceDeviceController.getVoiceDevicesByRestaurantId(restaurant.id);
+                voiceDevices.forEach((voiceDevice) => {
+                    that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
+                });
+                that.realmRestaurantController.deleteRestaurant(restaurant.id);
+            });
+            return that.realmController.deleteAccount(accountId);
         }, res);
     }
 }

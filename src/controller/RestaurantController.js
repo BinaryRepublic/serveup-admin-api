@@ -2,11 +2,15 @@
 
 const APIController = require('./APIController');
 const RealmRestaurantController = require('../../ro-realm/controller/RealmRestaurantController');
+const RealmMenuController = require('../../ro-realm/controller/RealmMenuController');
+const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
 class RestaurantController extends APIController {
     constructor () {
         super();
         this.realmController = new RealmRestaurantController();
+        this.realmMenuController = new RealmMenuController();
+        this.realmVoiceDeviceController = new RealmVoiceDeviceController();
         this.getRestaurants = this.getRestaurants.bind(this);
         this.getRestaurant = this.getRestaurant.bind(this);
         this.postRestaurant = this.postRestaurant.bind(this);
@@ -48,7 +52,18 @@ class RestaurantController extends APIController {
     deleteRestaurant (req, res) {
         let that = this;
         this.handleRequest([], function () {
-            return that.realmController.deleteRestaurant(req.params.restaurantId);
+            let restaurantId = req.params.restaurantId;
+            // delete menus
+            let menus = that.realmMenuController.getMenuByRestaurantId(restaurantId);
+            menus.forEach((menu) => {
+                that.realmMenuController.deleteMenu(menu.id);
+            });
+            // delete voice devices
+            let voiceDevices = that.realmVoiceDeviceController.getVoiceDevicesByRestaurantId(restaurantId);
+            voiceDevices.forEach((voiceDevice) => {
+                that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
+            });
+            return that.realmController.deleteRestaurant(restaurantId);
         }, res);
     };
 }
