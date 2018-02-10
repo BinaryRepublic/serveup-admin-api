@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "clean": "rm -rf DataRealm",
 		"docker": "docker build -t ro/admin-api .",
-		"sub": "git submodule update --remote"
+    "sub": "git submodule update --remote",
+    "debug": "DEBUG=debug node app.js"
   },
   "repository": {
     "type": "git",
