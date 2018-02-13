@@ -1,6 +1,6 @@
 {
   "name": "ro-admin-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Admin API for admin user interface to setup restaurants, tables, etc..",
   "main": "app.js",
   "scripts": {
