@@ -14,10 +14,10 @@ class MenuController extends APIController {
         this.deleteMenu = this.deleteMenu.bind(this);
     };
     getMenus (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
+        let validQueryParams = this.requestValidator.validRequestData(req.query, ['restaurantId']);
         let that = this;
-        this.handleRequest(validParams, function () {
-            return that.realmController.getMenuByRestaurantId(req.params.restaurantId);
+        this.handleRequest(validQueryParams, function () {
+            return that.realmController.getMenuByRestaurantId(req.query.restaurantId);
         }, res);
     };
     getMenu (req, res) {
@@ -28,9 +28,7 @@ class MenuController extends APIController {
         }, res);
     };
     postMenu (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
-        let validBody = this.requestValidator.validRequestData(req.body, ['name']);
-        let validRequest = validParams && validBody;
+        let validBody = this.requestValidator.validRequestData(req.body, ['name', 'restaurantId']);
         let that = this;
         let requestData = req.body;
         if (!requestData.drinks) {
@@ -38,39 +36,28 @@ class MenuController extends APIController {
             requestData.drinks = [];
             requestData.defaultParents = [];
         }
-        this.handleRequest(validRequest, function () {
-            requestData.restaurantId = req.params.restaurantId;
+        this.handleRequest(validBody, function () {
             return that.realmController.createMenu(requestData);
         }, res);
     };
     validateMenu (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
-        let validBody = this.requestValidator.validRequestData(req.body, ['name', 'drinks', 'defaultParents']);
-        let validRequest = validParams && validBody;
+        let validBody = this.requestValidator.validRequestData(req.body, ['restaurantId', 'name', 'drinks', 'defaultParents']);
         let that = this;
-        this.handleRequest(validRequest, function () {
-            req.body.restaurantId = req.params.restaurantId;
+        this.handleRequest(validBody, function () {
             return that.realmController.validateMenu(req.body);
         }, res);
     };
     putMenu (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
-        let validBody = this.requestValidator.validRequestData(req.body, ['name']);
-        let validRequest = validParams && validBody;
         let that = this;
-        let requestData = req.body;
-        if (!requestData.drinks) {
-            // create empty menu
-            requestData.drinks = [];
-            requestData.defaultParents = [];
-        }
-        this.handleRequest(validRequest, function () {
-            return that.realmController.updateMenu(req.params.menuId, requestData);
+        this.handleRequest(validParams, function () {
+            return that.realmController.updateMenu(req.params.menuId, req.body);
         }, res);
     };
     deleteMenu (req, res) {
+        let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
         let that = this;
-        this.handleRequest([], function () {
+        this.handleRequest(validParams, function () {
             return that.realmController.deleteMenu(req.params.menuId);
         }, res);
     };

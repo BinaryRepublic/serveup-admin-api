@@ -18,28 +18,24 @@ class RestaurantController extends APIController {
         this.deleteRestaurant = this.deleteRestaurant.bind(this);
     };
     getRestaurants (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+        let validQueryParams = this.requestValidator.validRequestData(req.query, ['accountId']);
         let that = this;
-        this.handleRequest(validParams, function () {
-            return that.realmController.getRestaurantsByAccountId(req.params.accountId);
+        this.handleRequest(validQueryParams, function () {
+            return that.realmController.getRestaurantsByAccountId(req.query.accountId);
         }, res);
     };
     getRestaurant (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['accountId', 'restaurantId']);
+        let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.getRestaurantById(req.params.restaurantId);
         }, res);
     };
     postRestaurant (req, res) {
-        let restaurant = req.body;
-        let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
-        let validBody = this.requestValidator.validRequestData(restaurant, ['name']);
-        let validRequest = validParams && validBody;
+        let validBody = this.requestValidator.validRequestData(req.body, ['name', 'accountId']);
         let that = this;
-        this.handleRequest(validRequest, function () {
-            restaurant.accountId = req.params.accountId;
-            return that.realmController.createRestaurant(restaurant);
+        this.handleRequest(validBody, function () {
+            return that.realmController.createRestaurant(req.body);
         }, res);
     };
     putRestaurant (req, res) {
@@ -50,8 +46,9 @@ class RestaurantController extends APIController {
         }, res);
     };
     deleteRestaurant (req, res) {
+        let validParams = this.requestValidator.validRequestData(req.params, ['restaurantId']);
         let that = this;
-        this.handleRequest([], function () {
+        this.handleRequest(validParams, function () {
             let restaurantId = req.params.restaurantId;
             // delete menus
             let menus = that.realmMenuController.getMenuByRestaurantId(restaurantId);
