@@ -17,7 +17,7 @@ Router.delete('/account/:accountId', accountController.deleteAccount);
 
 // Restaurant
 let restaurantController = new RestaurantController();
-Router.get('/restaurant/', restaurantController.getRestaurants);
+Router.get('/restaurants/', restaurantController.getRestaurants);
 Router.get('/restaurant/:restaurantId', restaurantController.getRestaurant);
 Router.post('/restaurant/', restaurantController.postRestaurant);
 Router.put('/restaurant/:restaurantId', restaurantController.putRestaurant);
@@ -25,7 +25,7 @@ Router.delete('/restaurant/:restaurantId', restaurantController.deleteRestaurant
 
 // Menus
 let menuController = new MenuController();
-Router.get('/menu', menuController.getMenus);
+Router.get('/menus', menuController.getMenus);
 Router.get('/menu/:menuId', menuController.getMenu);
 Router.post('/menu', menuController.postMenu);
 Router.post('/menu/validate', menuController.validateMenu);
@@ -34,10 +34,11 @@ Router.delete('/menu/:menuId', menuController.deleteMenu);
 
 // VoiceDevice
 let voiceDeviceController = new VoiceDeviceController();
-Router.get('/voiceDevice', voiceDeviceController.getVoiceDevices);
+Router.get('/voiceDevices', voiceDeviceController.getVoiceDevices);
 Router.get('/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
 Router.post('/voiceDevice', voiceDeviceController.postVoiceDevice);
 Router.put('/voiceDevice/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
+Router.delete('/voiceDevice/:voiceDeviceId', voiceDeviceController.deleteVoiceDevice);
 
 // Realm File Upload
 let fileController = new FileController();

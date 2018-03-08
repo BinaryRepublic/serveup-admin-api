@@ -41,5 +41,12 @@ class VoiceDeviceController extends APIController {
             return that.realmController.updateVoiceDevice(req.body.voiceDeviceId, req.body);
         }, res);
     };
+    deleteVoiceDevice (req, res) {
+        let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
+        let that = this;
+        this.handleRequest(validParams, function () {
+            return that.realmController.deleteVoiceDevice(req.params.voiceDeviceId);
+        }, res);
+    }
 }
 module.exports = VoiceDeviceController;
