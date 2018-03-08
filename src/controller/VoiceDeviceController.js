@@ -27,7 +27,7 @@ class VoiceDeviceController extends APIController {
         }, res);
     };
     postVoiceDevice (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, ['name', 'restaurantId']);
+        let validBody = this.requestValidator.validRequestData(req.body, ['number', 'restaurantId']);
         let that = this;
         this.handleRequest(validBody, function () {
             return that.realmController.createVoiceDevice(req.body.restaurantId, req.body);
