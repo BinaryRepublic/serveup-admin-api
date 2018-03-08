@@ -27,12 +27,10 @@ class VoiceDeviceController extends APIController {
         }, res);
     };
     postVoiceDevice (req, res) {
-        let validQueryParams = this.requestValidator.validRequestData(req.query, ['restaurantId']);
         let validBody = this.requestValidator.validRequestData(req.body, ['name', 'restaurantId']);
-        let validRequest = validQueryParams && validBody;
         let that = this;
-        this.handleRequest(validRequest, function () {
-            return that.realmController.createVoiceDevice(req.query.restaurantId, req.body);
+        this.handleRequest(validBody, function () {
+            return that.realmController.createVoiceDevice(req.body.restaurantId, req.body);
         }, res);
     };
     putVoiceDevice (req, res) {
