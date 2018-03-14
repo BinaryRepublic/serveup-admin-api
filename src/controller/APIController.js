@@ -8,18 +8,25 @@ class APIController {
         this.requestValidator = new RequestValidator();
         this.realmController = new ParentRealmController();
     };
-    handleRequest (requestValid, databaseCallback, res) {
-        if (requestValid) {
+    handleRequest (requestValidError, databaseCallback, res) {
+        if (requestValidError === false) {
             let result = databaseCallback();
             result = this.realmController.formatRealmObj(result);
             this.handleResponse(res, result);
         } else {
-            res.sendStatus(400);
-        };
+            let badRequest = {
+                error: requestValidError
+            };
+            res.status(400).json(badRequest);
+        }
     };
     handleResponse (res, jsonObject) {
         if (jsonObject) {
-            res.json(jsonObject);
+            if (jsonObject.error === undefined) {
+                res.json(jsonObject);
+            } else {
+                res.status(500).json(jsonObject);
+            }
         } else {
             res.sendStatus(500);
         }

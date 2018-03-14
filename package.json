@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "pm2 start app.js",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "mocha tests/**.test.js --exit && npm run clean",
     "clean": "rm -rf DataRealm",
     "docker": "docker build -t ro/admin-api .",
     "sub": "git submodule update --remote",
@@ -31,6 +31,9 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
-    "pm2": "^2.9.2"
+    "pm2": "^2.9.2",
+    "mocha": "^5.0.4",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0"
   }
 }
