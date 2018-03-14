@@ -1,102 +1,96 @@
-// 'use strict';
+'use strict';
  
-// const chai = require('chai');
-// const expect = require('chai').expect;
-// chai.use(require('chai-http'));
+const chai = require('chai');
+const expect = require('chai').expect;
+chai.use(require('chai-http'));
 
-// let api = require('../app.js');
+let api = require('../app.js');
+let accountId = '9b9ec7df-fd11-4bf9-982b-e82fe83d4624';
 
-// describe('Account with invalid data', function () {
-//     this.timeout(1000);
-//     it('POST /account', function () {
-//         return chai.request(api)
-//             .post('/account')
-//             .type('form')
-//             .send({
-//                 mail: 'restaurant-order@code.berlin',
-//                 firstName: 'Max',
-//                 surName: 'Mustermann',
-//                 phone: '030 124124189',
-//                 street: 'Storkower Straße 205a',
-//                 postCode: '10369',
-//                 city: 'Berlin',
-//                 country: 'Germany'
-//             })
-//             .catch(err => err.response)
-//             .then(res => {
-//                 checkAccountResponse(res);
-//             });
-//     });
-//     it('GET /accounts', function () {
-//         return chai.request(api)
-//             .get('/accounts')
-//             .then(res => {
-//                 expect(res).to.have.status(200);
-//                 expect(res).to.be.json;
-//                 expect(res.body).to.be.an('array');
-//                 expect(res.body).to.have.length(0);
-//             });
-//     });
-//     it('GET /account', function () {
-//         return chai.request(api)
-//             .get('/account/dasdu23urhas9da72easdau3j')
-//             .catch(err => err.response)
-//             .then(res => {
-//                 checkInvalidAccountIdResponse(res);
-//             });
-//     });
-//     it('PUT /account', function () {
-//         return chai.request(api)
-//             .put('/account/dasdu23urhas9da72easdau3j')
-//             .type('form')
-//             .send({
-//                 password: undefined
-//             })
-//             .catch(err => err.response)
-//             .then(res => {
-//                 checkInvalidAccountIdResponse(res);
-//             });
-//     });
-//     it('DELETE /account', function () {
-//         return chai.request(api)
-//             .delete('/account/dasdu23urhas9da72easdau3j')
-//             .catch(err => err.response)
-//             .then(res => {
-//                 checkInvalidAccountIdResponse(res);
-//             });
-//     });
-// });
+describe('Restaurant with invalid data', function () {
+    this.timeout(1000);
+    it('POST /restaurant', function () {
+        return chai.request(api)
+            .post('/restaurant')
+            .type('form')
+            .send({})
+            .catch(err => err.response)
+            .then(res => {
+                checkRestaurantResponse(res);
+            });
+    });
+    it('GET /restaurants', function () {
+        return chai.request(api)
+            .get('/restaurants')
+            .catch(err => err.response)
+            .then(res => {
+                expect(res).to.have.status(400);
+                expect(res).to.be.json;
+                expect(res.body).to.be.an('object');
+                checkErrorObject(res.body.error);
+                checkRestaurantObject(res.body);
+            });
+    });
+    it('GET /restaurant', function () {
+        return chai.request(api)
+            .get('/restaurant/dasdu23urhas9da72easdau3j')
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidRestaurantIdResponse(res);
+            });
+    });
+    it('PUT /restaurant', function () {
+        return chai.request(api)
+            .put('/restaurant/dasdu23urhas9da72easdau3j')
+            .type('form')
+            .send({
+                password: undefined
+            })
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidRestaurantIdResponse(res);
+            });
+    });
+    it('DELETE /account', function () {
+        return chai.request(api)
+            .delete('/account/dasdu23urhas9da72easdau3j')
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidRestaurantIdResponse(res);
+            });
+    });
+});
 
-// function checkAccountResponse(res) {
-//     expect(res).to.have.status(400);
-//     expect(res).to.be.json;
-//     expect(res.body).to.be.an('object');
-//     checkAccountObject(res.body);
-//     expect(res.body.error).to.be.an('object');
-//     checkErrorObject(res.body.error);
-// }
+function checkRestaurantResponse(res) {
+    expect(res).to.have.status(400);
+    expect(res).to.be.json;
+    expect(res.body).to.be.an('object');
+    checkRestaurantObject(res.body);
+    expect(res.body.error).to.be.an('object');
+    checkErrorObject(res.body.error);
+}
 
-// function checkErrorObject(errorObj) {
-//     expect(errorObj).to.exist;
-//     expect(errorObj.type).to.be.a('string');
-//     expect(errorObj.msg).to.be.a('string');
-// }
+function checkErrorObject(errorObj) {
+    expect(errorObj).to.exist;
+    expect(errorObj.type).to.be.a('string');
+    expect(errorObj.msg).to.be.a('string');
+}
 
-// function checkAccountObject(accountObj) {
-//     expect(accountObj.id).not.to.exist;
-//     expect(accountObj.mail).not.to.exist;
-//     expect(accountObj.password).not.to.exist;
-//     expect(accountObj.firstName).not.to.exist;
-//     expect(accountObj.surName).not.to.exist;
-//     expect(accountObj.phone).not.to.exist;
-//     expect(accountObj.address).not.to.exist;
-// }
+function checkRestaurantObject(accountObj) {
+    expect(accountObj.id).not.to.exist;
+    expect(accountObj.accountId).not.to.exist;
+    expect(accountObj.name).not.to.exist;
+    expect(accountObj.street).not.to.exist;
+    expect(accountObj.postCode).not.to.exist;
+    expect(accountObj.city).not.to.exist;
+    expect(accountObj.country).not.to.exist;
+}
 
-// function checkInvalidAccountIdResponse(res) {
-//     expect(res).to.have.status(500);
-//     expect(res).to.be.json;
-//     expect(res.body).to.be.an('object');
-//     expect(res.body.error).to.be.an('object');
-//     checkErrorObject(res.body.error);
-//     checkAccountObject(res.body);
-// }
+function checkInvalidRestaurantIdResponse(res) {
+    expect(res).to.have.status(500);
+    expect(res).to.be.json;
+    expect(res.body).to.be.an('object');
+    expect(res.body.error).to.be.an('object');
+    checkErrorObject(res.body.error);
+    checkRestaurantObject(res.body);
+}
