@@ -83,10 +83,8 @@ function checkAccountObject(accountObj) {
     expect(accountObj.firstName).to.be.a('string');
     expect(accountObj.surName).to.be.a('string');
     expect(accountObj.phone).to.be.a('string');
-    expect(accountObj.address).to.be.an('object');
-    expect(accountObj.address.id).to.be.a('string');
-    expect(accountObj.address.street).to.be.a('string');
-    expect(accountObj.address.postCode).to.be.a('string');
-    expect(accountObj.address.city).to.be.a('string');
-    expect(accountObj.address.country).to.be.a('string');
+    expect(accountObj.street).to.be.a('string');
+    expect(accountObj.postCode).to.be.a('string');
+    expect(accountObj.city).to.be.a('string');
+    expect(accountObj.country).to.be.a('string');
 }

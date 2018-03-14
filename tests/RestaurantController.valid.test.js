@@ -9,23 +9,23 @@ var restaurantId;
 
 describe('Restaurant with valid data', function () {
     this.timeout(1000);
-    // it('POST /restaurant', function () {
-    //     return chai.request(api)
-    //         .post('/restaurant')
-    //         .type('form')
-    //         .send({
-    //             name: 'Zur goldenen Möwe',
-    //             accountId: '9b9ec7df-fd11-4bf9-982b-e82fe83d4624',
-    //             street: 'Storkower Straße 205a',
-    //             postCode: '10369',
-    //             city: 'Berlin',
-    //             country: 'Germany'
-    //         })
-    //         .then(res => {
-    //             checkRestaurantResponse(res);
-    //             restaurantId = res.body.id;
-    //         });
-    // });
+    it('POST /restaurant', function () {
+        return chai.request(api)
+            .post('/restaurant')
+            .type('form')
+            .send({
+                name: 'Zur goldenen Möwe',
+                accountId: '9b9ec7df-fd11-4bf9-982b-e82fe83d4624',
+                street: 'Storkower Straße 205a',
+                postCode: '10369',
+                city: 'Berlin',
+                country: 'Germany'
+            })
+            .then(res => {
+                checkRestaurantResponse(res);
+                restaurantId = res.body.id;
+            });
+    });
     // it('GET /accounts', function () {
     //     return chai.request(api)
     //         .get('/accounts')
@@ -77,10 +77,8 @@ function checkRestaurantObject(accountObj) {
     expect(accountObj.id).to.be.a('string');
     expect(accountObj.name).to.be.a('string');
     expect(accountObj.accountId).to.be.a('string');
-    expect(accountObj.address).to.be.an('object');
-    expect(accountObj.address.id).to.be.a('string');
-    expect(accountObj.address.street).to.be.a('string');
-    expect(accountObj.address.postCode).to.be.a('string');
-    expect(accountObj.address.city).to.be.a('string');
-    expect(accountObj.address.country).to.be.a('string');
+    expect(accountObj.street).to.be.a('string');
+    expect(accountObj.postCode).to.be.a('string');
+    expect(accountObj.city).to.be.a('string');
+    expect(accountObj.country).to.be.a('string');
 }
