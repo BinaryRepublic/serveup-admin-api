@@ -21,7 +21,7 @@ class AccountController extends APIController {
     };
     getAccounts (req, res) {
         let that = this;
-        this.handleRequest([], function () {
+        this.handleRequest(false, function () {
             return that.realmController.getAccounts();
         }, res);
     };

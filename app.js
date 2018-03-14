@@ -27,6 +27,4 @@ app.get('/download', function (req, res) {
     res.download(file);
 });
 app.use('/', require('./src/routes'));
-app.listen(4000, () => console.log('Admin API running on port 4000'));
-
-module.exports = app;
+module.exports = app.listen(4000, () => console.log('Admin API running on port 4000'));

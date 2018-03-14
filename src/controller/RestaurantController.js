@@ -38,7 +38,11 @@ class RestaurantController extends APIController {
     postRestaurant (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
             {name: 'name', type: 'string'},
-            {name: 'accountId', type: 'string'}
+            {name: 'accountId', type: 'string'},
+            {name: 'street', type: 'string'},
+            {name: 'postCode', type: 'string'},
+            {name: 'city', type: 'string'},
+            {name: 'country', type: 'string'}
         ]);
         let that = this;
         this.handleRequest(validBody, function () {

@@ -28,7 +28,13 @@ class APIController {
                 res.status(500).json(jsonObject);
             }
         } else {
-            res.sendStatus(500);
+            let errorObj = {
+                error: {
+                    type: 'SERVER_ERROR',
+                    msg: ''
+                }
+            };
+            res.status(500).json(errorObj);
         }
     };
 }
