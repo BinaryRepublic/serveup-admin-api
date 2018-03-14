@@ -14,14 +14,17 @@ const AccessController = require('./src/middleware/AccessController.js');
 let accessController = new AccessController();
 const AuthorizationController = require('./src/middleware/AuthorizationController.js');
 let authorizationController = new AuthorizationController();
+const fileUpload = require('express-fileupload');
 
 app.use(metricsMiddleware);
 app.use('/', accessController.access);
 app.use('/', authorizationController.authorization);
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.get('/download', function (req, res) {
     var file = path.join(__dirname, 'DataRealm', 'default.realm');
     res.download(file);
