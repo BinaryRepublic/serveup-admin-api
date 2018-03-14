@@ -13,28 +13,37 @@ class VoiceDeviceController extends APIController {
         this.putVoiceDevice = this.putVoiceDevice.bind(this);
     };
     getVoiceDevices (req, res) {
-        let validQueryParams = this.requestValidator.validRequestData(req.query, ['restaurantId']);
+        let validQueryParams = this.requestValidator.validRequestData(req.query, [
+            {name: 'restaurantId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validQueryParams, function () {
             return that.realmController.getVoiceDevicesByRestaurantId(req.query.restaurantId);
         }, res);
     };
     getVoiceDevice (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'voiceDeviceId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.getVoiceDeviceById(req.params.voiceDeviceId);
         }, res);
     };
     postVoiceDevice (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, ['number', 'restaurantId']);
+        let validBody = this.requestValidator.validRequestData(req.body, [
+            {name: 'restaurantId', type: 'string'},
+            {name: 'number', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validBody, function () {
             return that.realmController.createVoiceDevice(req.body.restaurantId, req.body);
         }, res);
     };
     putVoiceDevice (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, ['restaurantId']);
+        let validBody = this.requestValidator.validRequestData(req.body, [
+            {name: 'restaurantId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validBody, function () {
             // UPDATE METHOD IN REALM CONTROLLER -> ONLY BODY AS PARAMETER
@@ -42,7 +51,9 @@ class VoiceDeviceController extends APIController {
         }, res);
     };
     deleteVoiceDevice (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['voiceDeviceId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'voiceDeviceId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.deleteVoiceDevice(req.params.voiceDeviceId);

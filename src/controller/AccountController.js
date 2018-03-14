@@ -26,30 +26,46 @@ class AccountController extends APIController {
         }, res);
     };
     getAccountById (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'accountId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.getAccountById(req.params.accountId);
         }, res);
     };
     postAccount (req, res) {
-        let properties = ['mail', 'password', 'firstName', 'surName', 'street', 'postCode', 'city', 'country', 'phone'];
-        let validBody = this.requestValidator.validRequestData(req.body, properties);
+        let validBody = this.requestValidator.validRequestData(req.body, [
+            {name: 'mail', type: 'string'},
+            {name: 'password', type: 'string'},
+            {name: 'firstName', type: 'string'},
+            {name: 'surName', type: 'string'},
+            {name: 'street', type: 'string'},
+            {name: 'postCode', type: 'string'},
+            {name: 'city', type: 'string'},
+            {name: 'country', type: 'string'},
+            {name: 'phone', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validBody, function () {
             return that.realmController.createAccount(req.body);
         }, res);
     };
     putAccount (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['accountId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'accountId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.updateAccount(req.params.accountId, req.body);
         }, res);
     };
     deleteAccount (req, res) {
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'accountId', type: 'string'}
+        ]);
         let that = this;
-        this.handleRequest([], function () {
+        this.handleRequest(validParams, function () {
             let accountId = req.params.accountId;
             // delete restaurants
             let restaurants = that.realmRestaurantController.getRestaurantsByAccountId(accountId);

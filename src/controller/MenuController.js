@@ -14,21 +14,28 @@ class MenuController extends APIController {
         this.deleteMenu = this.deleteMenu.bind(this);
     };
     getMenus (req, res) {
-        let validQueryParams = this.requestValidator.validRequestData(req.query, ['restaurantId']);
+        let validQueryParams = this.requestValidator.validRequestData(req.query, [
+            {name: 'restaurantId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validQueryParams, function () {
             return that.realmController.getMenuByRestaurantId(req.query.restaurantId);
         }, res);
     };
     getMenu (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'menuId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.getMenuById(req.params.voiceDeviceId);
         }, res);
     };
     postMenu (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, ['name', 'restaurantId']);
+        let validBody = this.requestValidator.validRequestData(req.body, [
+            {name: 'name', type: 'string'},
+            {name: 'restaurantId', type: 'string'}
+        ]);
         let that = this;
         let requestData = req.body;
         if (!requestData.drinks) {
@@ -41,21 +48,30 @@ class MenuController extends APIController {
         }, res);
     };
     validateMenu (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, ['restaurantId', 'name', 'drinks', 'defaultParents']);
+        let validBody = this.requestValidator.validRequestData(req.body, [
+            {name: 'restaurantId', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'drinks', type: 'array'},
+            {name: 'defaultParents', type: 'object'}
+        ]);
         let that = this;
         this.handleRequest(validBody, function () {
             return that.realmController.validateMenu(req.body);
         }, res);
     };
     putMenu (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'menuId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.updateMenu(req.params.menuId, req.body);
         }, res);
     };
     deleteMenu (req, res) {
-        let validParams = this.requestValidator.validRequestData(req.params, ['menuId']);
+        let validParams = this.requestValidator.validRequestData(req.params, [
+            {name: 'menuId', type: 'string'}
+        ]);
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.deleteMenu(req.params.menuId);
