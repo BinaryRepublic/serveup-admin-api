@@ -11,6 +11,7 @@ class VoiceDeviceController extends APIController {
         this.getVoiceDevice = this.getVoiceDevice.bind(this);
         this.postVoiceDevice = this.postVoiceDevice.bind(this);
         this.putVoiceDevice = this.putVoiceDevice.bind(this);
+        this.deleteVoiceDevice = this.deleteVoiceDevice.bind(this);
     };
     getVoiceDevices (req, res) {
         let validQueryParams = this.requestValidator.validRequestData(req.query, [
@@ -41,13 +42,12 @@ class VoiceDeviceController extends APIController {
         }, res);
     };
     putVoiceDevice (req, res) {
-        let validBody = this.requestValidator.validRequestData(req.body, [
-            {name: 'restaurantId', type: 'string'}
+        let validBody = this.requestValidator.validRequestData(req.params, [
+            {name: 'voiceDeviceId', type: 'string'}
         ]);
         let that = this;
         this.handleRequest(validBody, function () {
-            // UPDATE METHOD IN REALM CONTROLLER -> ONLY BODY AS PARAMETER
-            return that.realmController.updateVoiceDevice(req.body.voiceDeviceId, req.body);
+            return that.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body);
         }, res);
     };
     deleteVoiceDevice (req, res) {
