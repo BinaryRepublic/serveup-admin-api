@@ -6,67 +6,72 @@ chai.use(require('chai-http'));
 
 let api = require('../app.js');
 
-describe('Menu with invalid data', function () {
+let restaurantId = '5b428715-8d30-4a27-82f4-565577922aa5';
+
+describe('VoiceDevice with invalid data', function () {
     this.timeout(1000);
-    it('POST /menu', function () {
+    it('POST /voiceDevice', function () {
         return chai.request(api)
-            .post('/menu')
+            .post('/voiceDevice')
             .type('form')
             .set('content-type', 'application/json')
-            .send({})
+            .send({
+                restaurantId: restaurantId,
+                number: 2
+            })
             .catch(err => err.response)
             .then(res => {
-                checkMenuResponse(res);
+                checkVoiceDeviceResponse(res);
             });
     });
-    it('GET /menus', function () {
+    it('GET /voiceDevices', function () {
         return chai.request(api)
-            .get('/menus?restaurantId=dasdu23urhas9da72easdau3j')
+            .get('/voiceDevices?restaurantId=dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
                 expect(res).to.have.status(500);
                 expect(res).to.be.json;
                 expect(res.body).to.be.an('object');
                 checkErrorObject(res.body.error);
-                checkMenuObject(res.body);
+                checkVoiceDeviceObject(res.body);
             });
     });
-    it('GET /menu', function () {
+    it('GET /voiceDevice', function () {
         return chai.request(api)
-            .get('/menu/dasdu23urhas9da72easdau3j')
+            .get('/voiceDevice/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidMenuIdResponse(res);
+                checkInvalidVoiceDeviceIdResponse(res);
             });
     });
-    it('PUT /menu', function () {
+    it('PUT /voiceDevice', function () {
         return chai.request(api)
-            .put('/menu/dasdu23urhas9da72easdau3j')
+            .put('/voiceDevice/dasdu23urhas9da72easdau3j')
             .type('form')
             .set('content-type', 'application/json')
             .send({
-                name: 123
+                password: undefined
             })
             .catch(err => err.response)
             .then(res => {
-                checkInvalidMenuIdResponse(res);
+                checkInvalidVoiceDeviceIdResponse(res);
             });
     });
-    it('DELETE /menu', function () {
+    it('DELETE /voiceDevice', function () {
         return chai.request(api)
-            .delete('/menu/dasdu23urhas9da72easdau3j')
+            .delete('/voiceDevice/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidMenuIdResponse(res);
+                checkInvalidVoiceDeviceIdResponse(res);
             });
     });
 });
 
-function checkMenuResponse(res) {
+function checkVoiceDeviceResponse(res) {
     expect(res).to.have.status(400);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
-    checkMenuObject(res.body);
+    checkVoiceDeviceObject(res.body);
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
 }
@@ -77,19 +82,17 @@ function checkErrorObject(errorObj) {
     expect(errorObj.msg).to.be.a('string');
 }
 
-function checkMenuObject(accountObj) {
+function checkVoiceDeviceObject(accountObj) {
     expect(accountObj.id).not.to.exist;
     expect(accountObj.restaurantId).not.to.exist;
     expect(accountObj.name).not.to.exist;
-    expect(accountObj.drinks).not.to.exist;
-    expect(accountObj.defaultParents).not.to.exist;
 }
 
-function checkInvalidMenuIdResponse(res) {
+function checkInvalidVoiceDeviceIdResponse(res) {
     expect(res).to.have.status(500);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
-    checkMenuObject(res.body);
+    checkVoiceDeviceObject(res.body);
 }

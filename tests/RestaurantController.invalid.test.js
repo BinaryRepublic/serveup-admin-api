@@ -52,9 +52,9 @@ describe('Restaurant with invalid data', function () {
                 checkInvalidRestaurantIdResponse(res);
             });
     });
-    it('DELETE /account', function () {
+    it('DELETE /restaurant', function () {
         return chai.request(api)
-            .delete('/account/dasdu23urhas9da72easdau3j')
+            .delete('/restaurant/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
                 checkInvalidRestaurantIdResponse(res);

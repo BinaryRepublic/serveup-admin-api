@@ -65,17 +65,22 @@ class RestaurantController extends APIController {
         let that = this;
         this.handleRequest(validParams, function () {
             let restaurantId = req.params.restaurantId;
-            // delete menus
+
             let menus = that.realmMenuController.getMenuByRestaurantId(restaurantId);
-            menus.forEach((menu) => {
-                that.realmMenuController.deleteMenu(menu.id);
-            });
-            // delete voice devices
             let voiceDevices = that.realmVoiceDeviceController.getVoiceDevicesByRestaurantId(restaurantId);
-            voiceDevices.forEach((voiceDevice) => {
-                that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
-            });
-            return that.realmController.deleteRestaurant(restaurantId);
+            if (menus && voiceDevices) {
+                // delete voice devices
+                menus.forEach((menu) => {
+                    that.realmMenuController.deleteMenu(menu.id);
+                });
+                // delete voice devices
+                voiceDevices.forEach((voiceDevice) => {
+                    that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
+                });
+                return that.realmController.deleteRestaurant(restaurantId);
+            } else {
+                return undefined;
+            }
         }, res);
     };
 }
