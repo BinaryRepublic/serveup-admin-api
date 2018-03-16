@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
     let authApi = new AuthApiInterface();
     let accessToken = req.header('Access-Token');
     if (!accessToken) {
-        res.status(400).json({
+        res.status(401).json({
             error: {
                 type: 'ACCESS_TOKEN_MISSING',
                 msg: 'Please send a valid access-token in the request header.'
@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
             if (body && body.error) {
                 error = body.error;
             }
-            res.status(400).json({
+            res.status(401).json({
                 error: error
             });
         });
