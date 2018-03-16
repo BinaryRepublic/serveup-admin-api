@@ -31,27 +31,27 @@ describe('Menu with invalid data', function () {
                 checkMenuObject(res.body);
             });
     });
-    // it('GET /restaurant', function () {
-    //     return chai.request(api)
-    //         .get('/restaurant/dasdu23urhas9da72easdau3j')
-    //         .catch(err => err.response)
-    //         .then(res => {
-    //             checkInvalidRestaurantIdResponse(res);
-    //         });
-    // });
-    // it('PUT /restaurant', function () {
-    //     return chai.request(api)
-    //         .put('/restaurant/dasdu23urhas9da72easdau3j')
-    //         .type('form')
-    //         .set('content-type', 'application/json')
-    //         .send({
-    //             password: undefined
-    //         })
-    //         .catch(err => err.response)
-    //         .then(res => {
-    //             checkInvalidRestaurantIdResponse(res);
-    //         });
-    // });
+    it('GET /menu', function () {
+        return chai.request(api)
+            .get('/menu/dasdu23urhas9da72easdau3j')
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidMenuIdResponse(res);
+            });
+    });
+    it('PUT /menu', function () {
+        return chai.request(api)
+            .put('/menu/dasdu23urhas9da72easdau3j')
+            .type('form')
+            .set('content-type', 'application/json')
+            .send({
+                name: 123
+            })
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidMenuIdResponse(res);
+            });
+    });
     // it('DELETE /account', function () {
     //     return chai.request(api)
     //         .delete('/account/dasdu23urhas9da72easdau3j')
@@ -85,11 +85,11 @@ function checkMenuObject(accountObj) {
     expect(accountObj.defaultParents).not.to.exist;
 }
 
-function checkInvalidRestaurantIdResponse(res) {
+function checkInvalidMenuIdResponse(res) {
     expect(res).to.have.status(500);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
-    checkRestaurantObject(res.body);
+    checkMenuObject(res.body);
 }

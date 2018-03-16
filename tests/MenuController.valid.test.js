@@ -166,18 +166,18 @@ describe('Menu with valid data', function () {
                 checkMenuResponse(res);
             });
     });
-    // it('PUT /menu', function () {
-    //     return chai.request(api)
-    //         .put('/menu/' + menuId)
-    //         .type('form')
-    //         .send({
-    //             name: 'Tageskarte'
-    //         })
-    //         .then(res => {
-    //             checkMenuResponse(res);
-    //             expect(res.body.name).to.be.equal('Tageskarte');
-    //         });
-    // });
+    it('PUT /menu', function () {
+        return chai.request(api)
+            .put('/menu/' + menuId)
+            .type('form')
+            .send({
+                name: 'Tageskarte'
+            })
+            .then(res => {
+                checkMenuResponse(res);
+                expect(res.body.name).to.be.equal('Tageskarte');
+            });
+    });
     it('DELETE /menu', function () {
         return chai.request(api)
             .delete('/menu/' + menuId)
