@@ -17,30 +17,32 @@ Router.delete('/account/:accountId', accountController.deleteAccount);
 
 // Restaurant
 let restaurantController = new RestaurantController();
-Router.get('/account/:accountId/restaurant/', restaurantController.getRestaurants);
-Router.get('/account/:accountId/restaurant/:restaurantId', restaurantController.getRestaurant);
-Router.post('/account/:accountId/restaurant/', restaurantController.postRestaurant);
-Router.put('/account/:accountId/restaurant/:restaurantId', restaurantController.putRestaurant);
-Router.delete('/account/:accountId/restaurant/:restaurantId', restaurantController.deleteRestaurant);
+Router.get('/restaurants/', restaurantController.getRestaurants);
+Router.get('/restaurant/:restaurantId', restaurantController.getRestaurant);
+Router.post('/restaurant/', restaurantController.postRestaurant);
+Router.put('/restaurant/:restaurantId', restaurantController.putRestaurant);
+Router.delete('/restaurant/:restaurantId', restaurantController.deleteRestaurant);
 
 // Menus
 let menuController = new MenuController();
-Router.get('/account/:accountId/restaurant/:restaurantId/menu', menuController.getMenus);
-Router.get('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.getMenu);
-Router.post('/account/:accountId/restaurant/:restaurantId/menu', menuController.postMenu);
-Router.post('/account/:accountId/restaurant/:restaurantId/menu/validate', menuController.validateMenu);
-Router.put('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.putMenu);
-Router.delete('/account/:accountId/restaurant/:restaurantId/menu/:menuId', menuController.deleteMenu);
+Router.get('/menus', menuController.getMenus);
+Router.get('/menu/:menuId', menuController.getMenu);
+Router.post('/menu', menuController.postMenu);
+Router.post('/menu/validate', menuController.validateMenu);
+Router.put('/menu/:menuId', menuController.putMenu);
+Router.delete('/menu/:menuId', menuController.deleteMenu);
 
 // VoiceDevice
 let voiceDeviceController = new VoiceDeviceController();
-Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.getVoiceDevices);
-Router.get('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
-Router.post('/account/:accountId/restaurant/:restaurantId/voiceDevice', voiceDeviceController.postVoiceDevice);
-Router.put('/account/:accountId/restaurant/:restaurantId/voiceDevice/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
+Router.get('/voiceDevices', voiceDeviceController.getVoiceDevices);
+Router.get('/voiceDevice/:voiceDeviceId', voiceDeviceController.getVoiceDevice);
+Router.post('/voiceDevice', voiceDeviceController.postVoiceDevice);
+Router.put('/voiceDevice/:voiceDeviceId', voiceDeviceController.putVoiceDevice);
+Router.delete('/voiceDevice/:voiceDeviceId', voiceDeviceController.deleteVoiceDevice);
 
 // Realm File Upload
 let fileController = new FileController();
 Router.post('/upload', fileController.uploadRequest);
+Router.get('/download', fileController.downloadRequest);
 
 module.exports = Router;
