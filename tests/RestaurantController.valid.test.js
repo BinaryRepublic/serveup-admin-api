@@ -14,6 +14,7 @@ describe('Restaurant with valid data', function () {
         return chai.request(api)
             .post('/restaurant')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 name: 'Zur goldenen Möwe',
                 accountId: accountId,
@@ -49,6 +50,7 @@ describe('Restaurant with valid data', function () {
         return chai.request(api)
             .put('/restaurant/' + restaurantId)
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 name: 'Mikas Pommesbude'
             })

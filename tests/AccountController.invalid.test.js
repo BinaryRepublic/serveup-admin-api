@@ -12,6 +12,7 @@ describe('Account with invalid data', function () {
         return chai.request(api)
             .post('/account')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 mail: 'restaurant-order@code.berlin',
                 firstName: 'Max',
@@ -48,6 +49,7 @@ describe('Account with invalid data', function () {
         return chai.request(api)
             .put('/account/dasdu23urhas9da72easdau3j')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 password: undefined
             })

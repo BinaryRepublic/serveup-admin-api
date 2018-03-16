@@ -17,12 +17,14 @@ class RequestValidator {
                 // check type
                 let dataItem = data[formatItem.name];
                 let dataItemType = typeof dataItem;
-                if (dataItemType !== formatItem.type) {
-                    error = {
-                        type: 'PARAM_TYPE',
-                        msg: 'param ' + formatItem.name + ' needs to be type ' + formatItem.type
-                    };
-                    break;
+                if (!(formatItem.type === 'array' && Array.isArray(dataItem))) {
+                    if (dataItemType !== formatItem.type) {
+                        error = {
+                            type: 'PARAM_TYPE',
+                            msg: 'param ' + formatItem.name + ' needs to be type ' + formatItem.type
+                        };
+                        break;
+                    }
                 }
                 // check possible values
                 if (formatItem.values) {

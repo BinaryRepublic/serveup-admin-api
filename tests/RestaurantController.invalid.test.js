@@ -13,6 +13,7 @@ describe('Restaurant with invalid data', function () {
         return chai.request(api)
             .post('/restaurant')
             .type('form')
+            .set('content-type', 'application/json')
             .send({})
             .catch(err => err.response)
             .then(res => {
@@ -43,6 +44,7 @@ describe('Restaurant with invalid data', function () {
         return chai.request(api)
             .put('/restaurant/dasdu23urhas9da72easdau3j')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 password: undefined
             })

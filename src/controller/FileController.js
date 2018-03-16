@@ -1,5 +1,7 @@
 'use_strict';
 
+const path = require('path');
+
 class FileController {
     uploadRequest (req, res) {
         if (!req.files.file || !req.files.fileLock) {
@@ -21,5 +23,9 @@ class FileController {
             }
         });
     };
+    downloadRequest (req, res) {
+        var file = path.join(__dirname, 'DataRealm', 'default.realm');
+        res.download(file);
+    }
 }
 module.exports = FileController;

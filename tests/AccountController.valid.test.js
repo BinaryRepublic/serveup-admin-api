@@ -13,6 +13,7 @@ describe('Account with valid data', function () {
         return chai.request(api)
             .post('/account')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 mail: 'restaurant-order@code.berlin',
                 password: 'password123',
@@ -51,6 +52,7 @@ describe('Account with valid data', function () {
         return chai.request(api)
             .put('/account/' + accountId)
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 password: 'NEUESpassword123'
             })
