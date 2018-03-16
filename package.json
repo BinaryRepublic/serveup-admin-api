@@ -25,7 +25,8 @@
     "express-fileupload": "^0.4.0",
     "express-prom-bundle": "^3.3.0",
     "realm": "^2.2.4",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "eslint-config-standard": "^11.0.0-beta.0",
