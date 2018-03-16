@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
     let authApi = new AuthApiInterface();
     let accessToken = req.header('Access-Token');
     let date = new Date();
-    console.log(date + ' # ACCESS-TOKEN ' + accessToken);
+    console.log(date + ' # ACCESS-TOKEN ' + accessToken + ' # ' + req.header('Authorization'));
     if (!accessToken) {
         res.status(401).json({
             error: {
