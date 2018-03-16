@@ -21,9 +21,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-// authentication
-// app.use('/', require('./src/authRoutes'));
-// app.use(require('./src/middleware/authentication'));
+app.use('/', require('./src/authRoutes'));
+app.use(require('./src/middleware/authentication'));
 
 app.use('/', require('./src/routes'));
 module.exports = app.listen(4000, () => console.log('Admin API running on port 4000'));
