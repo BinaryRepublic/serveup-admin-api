@@ -163,7 +163,6 @@ describe('Menu with valid data', function () {
             .get('/menu/' + menuId)
             .catch(err => err.response)
             .then(res => {
-                console.log(res.body);
                 checkMenuResponse(res);
             });
     });

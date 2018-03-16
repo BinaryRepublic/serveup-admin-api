@@ -5,7 +5,6 @@ const expect = require('chai').expect;
 chai.use(require('chai-http'));
 
 let api = require('../app.js');
-let accountId = '9b9ec7df-fd11-4bf9-982b-e82fe83d4624';
 
 describe('Restaurant with invalid data', function () {
     this.timeout(1000);
