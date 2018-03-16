@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
 app.use('/', require('./src/middleware/accessControl').main);
-// app.use(require('./src/middleware/authorization'));
+app.use(require('./src/middleware/authorization'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
