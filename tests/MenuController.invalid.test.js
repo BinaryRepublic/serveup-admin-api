@@ -6,67 +6,67 @@ chai.use(require('chai-http'));
 
 let api = require('../app.js');
 
-describe('Restaurant with invalid data', function () {
+describe('Menu with invalid data', function () {
     this.timeout(1000);
-    it('POST /restaurant', function () {
+    it('POST /menu', function () {
         return chai.request(api)
-            .post('/restaurant')
+            .post('/menu')
             .type('form')
             .set('content-type', 'application/json')
             .send({})
             .catch(err => err.response)
             .then(res => {
-                checkRestaurantResponse(res);
+                checkMenuResponse(res);
             });
     });
-    it('GET /restaurants', function () {
+    it('GET /menus', function () {
         return chai.request(api)
-            .get('/restaurants')
+            .get('/menus?restaurantId=dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                expect(res).to.have.status(400);
+                expect(res).to.have.status(500);
                 expect(res).to.be.json;
                 expect(res.body).to.be.an('object');
                 checkErrorObject(res.body.error);
-                checkRestaurantObject(res.body);
+                checkMenuObject(res.body);
             });
     });
-    it('GET /restaurant', function () {
+    it('GET /menu', function () {
         return chai.request(api)
-            .get('/restaurant/dasdu23urhas9da72easdau3j')
+            .get('/menu/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidRestaurantIdResponse(res);
+                checkInvalidMenuIdResponse(res);
             });
     });
-    it('PUT /restaurant', function () {
+    it('PUT /menu', function () {
         return chai.request(api)
-            .put('/restaurant/dasdu23urhas9da72easdau3j')
+            .put('/menu/dasdu23urhas9da72easdau3j')
             .type('form')
             .set('content-type', 'application/json')
             .send({
-                password: undefined
+                name: 123
             })
             .catch(err => err.response)
             .then(res => {
-                checkInvalidRestaurantIdResponse(res);
+                checkInvalidMenuIdResponse(res);
             });
     });
-    it('DELETE /restaurant', function () {
+    it('DELETE /menu', function () {
         return chai.request(api)
-            .delete('/restaurant/dasdu23urhas9da72easdau3j')
+            .delete('/menu/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidRestaurantIdResponse(res);
+                checkInvalidMenuIdResponse(res);
             });
     });
 });
 
-function checkRestaurantResponse(res) {
+function checkMenuResponse(res) {
     expect(res).to.have.status(400);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
-    checkRestaurantObject(res.body);
+    checkMenuObject(res.body);
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
 }
@@ -77,21 +77,19 @@ function checkErrorObject(errorObj) {
     expect(errorObj.msg).to.be.a('string');
 }
 
-function checkRestaurantObject(accountObj) {
+function checkMenuObject(accountObj) {
     expect(accountObj.id).not.to.exist;
-    expect(accountObj.accountId).not.to.exist;
+    expect(accountObj.restaurantId).not.to.exist;
     expect(accountObj.name).not.to.exist;
-    expect(accountObj.street).not.to.exist;
-    expect(accountObj.postCode).not.to.exist;
-    expect(accountObj.city).not.to.exist;
-    expect(accountObj.country).not.to.exist;
+    expect(accountObj.drinks).not.to.exist;
+    expect(accountObj.defaultParents).not.to.exist;
 }
 
-function checkInvalidRestaurantIdResponse(res) {
+function checkInvalidMenuIdResponse(res) {
     expect(res).to.have.status(500);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
-    checkRestaurantObject(res.body);
+    checkMenuObject(res.body);
 }

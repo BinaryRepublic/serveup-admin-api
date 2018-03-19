@@ -6,48 +6,47 @@ chai.use(require('chai-http'));
 
 let api = require('../app.js');
 
-describe('Account with invalid data', function () {
+let restaurantId = '5b428715-8d30-4a27-82f4-565577922aa5';
+
+describe('VoiceDevice with invalid data', function () {
     this.timeout(1000);
-    it('POST /account', function () {
+    it('POST /voiceDevice', function () {
         return chai.request(api)
-            .post('/account')
+            .post('/voiceDevice')
             .type('form')
             .set('content-type', 'application/json')
             .send({
-                mail: 'restaurant-order@code.berlin',
-                firstName: 'Max',
-                surName: 'Mustermann',
-                phone: '030 124124189',
-                street: 'Storkower Straße 205a',
-                postCode: '10369',
-                city: 'Berlin',
-                country: 'Germany'
+                restaurantId: restaurantId,
+                number: 2
             })
             .catch(err => err.response)
             .then(res => {
-                checkAccountResponse(res);
+                checkVoiceDeviceResponse(res);
             });
     });
-    it('GET /accounts', function () {
+    it('GET /voiceDevices', function () {
         return chai.request(api)
-            .get('/accounts')
-            .then(res => {
-                expect(res).to.have.status(200);
-                expect(res).to.be.json;
-                expect(res.body).to.be.an('array');
-            });
-    });
-    it('GET /account', function () {
-        return chai.request(api)
-            .get('/account/dasdu23urhas9da72easdau3j')
+            .get('/voiceDevices?restaurantId=dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidAccountIdResponse(res);
+                expect(res).to.have.status(500);
+                expect(res).to.be.json;
+                expect(res.body).to.be.an('object');
+                checkErrorObject(res.body.error);
+                checkVoiceDeviceObject(res.body);
             });
     });
-    it('PUT /account', function () {
+    it('GET /voiceDevice', function () {
         return chai.request(api)
-            .put('/account/dasdu23urhas9da72easdau3j')
+            .get('/voiceDevice/dasdu23urhas9da72easdau3j')
+            .catch(err => err.response)
+            .then(res => {
+                checkInvalidVoiceDeviceIdResponse(res);
+            });
+    });
+    it('PUT /voiceDevice', function () {
+        return chai.request(api)
+            .put('/voiceDevice/dasdu23urhas9da72easdau3j')
             .type('form')
             .set('content-type', 'application/json')
             .send({
@@ -55,24 +54,24 @@ describe('Account with invalid data', function () {
             })
             .catch(err => err.response)
             .then(res => {
-                checkInvalidAccountIdResponse(res);
+                checkInvalidVoiceDeviceIdResponse(res);
             });
     });
-    it('DELETE /account', function () {
+    it('DELETE /voiceDevice', function () {
         return chai.request(api)
-            .delete('/account/dasdu23urhas9da72easdau3j')
+            .delete('/voiceDevice/dasdu23urhas9da72easdau3j')
             .catch(err => err.response)
             .then(res => {
-                checkInvalidAccountIdResponse(res);
+                checkInvalidVoiceDeviceIdResponse(res);
             });
     });
 });
 
-function checkAccountResponse(res) {
+function checkVoiceDeviceResponse(res) {
     expect(res).to.have.status(400);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
-    checkAccountObject(res.body);
+    checkVoiceDeviceObject(res.body);
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
 }
@@ -83,21 +82,17 @@ function checkErrorObject(errorObj) {
     expect(errorObj.msg).to.be.a('string');
 }
 
-function checkAccountObject(accountObj) {
+function checkVoiceDeviceObject(accountObj) {
     expect(accountObj.id).not.to.exist;
-    expect(accountObj.mail).not.to.exist;
-    expect(accountObj.password).not.to.exist;
-    expect(accountObj.firstName).not.to.exist;
-    expect(accountObj.surName).not.to.exist;
-    expect(accountObj.phone).not.to.exist;
-    expect(accountObj.address).not.to.exist;
+    expect(accountObj.restaurantId).not.to.exist;
+    expect(accountObj.name).not.to.exist;
 }
 
-function checkInvalidAccountIdResponse(res) {
+function checkInvalidVoiceDeviceIdResponse(res) {
     expect(res).to.have.status(500);
     expect(res).to.be.json;
     expect(res.body).to.be.an('object');
     expect(res.body.error).to.be.an('object');
     checkErrorObject(res.body.error);
-    checkAccountObject(res.body);
+    checkVoiceDeviceObject(res.body);
 }

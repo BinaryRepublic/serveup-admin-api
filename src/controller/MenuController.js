@@ -10,6 +10,7 @@ class MenuController extends APIController {
         this.getMenus = this.getMenus.bind(this);
         this.getMenu = this.getMenu.bind(this);
         this.postMenu = this.postMenu.bind(this);
+        this.validateMenu = this.validateMenu.bind(this);
         this.putMenu = this.putMenu.bind(this);
         this.deleteMenu = this.deleteMenu.bind(this);
     };
@@ -28,7 +29,7 @@ class MenuController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            return that.realmController.getMenuById(req.params.voiceDeviceId);
+            return that.realmController.getMenuById(req.params.menuId);
         }, res);
     };
     postMenu (req, res) {
@@ -52,11 +53,16 @@ class MenuController extends APIController {
             {name: 'restaurantId', type: 'string'},
             {name: 'name', type: 'string'},
             {name: 'drinks', type: 'array'},
-            {name: 'defaultParents', type: 'object'}
+            {name: 'defaultParents', type: 'array'}
         ]);
         let that = this;
         this.handleRequest(validBody, function () {
-            return that.realmController.validateMenu(req.body);
+            var result = that.realmController.validateMenu(req.body);
+            if (result === true) {
+                return req.body;
+            } else {
+                return result;
+            }
         }, res);
     };
     putMenu (req, res) {

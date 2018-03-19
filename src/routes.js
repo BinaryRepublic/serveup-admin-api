@@ -43,5 +43,6 @@ Router.delete('/voiceDevice/:voiceDeviceId', voiceDeviceController.deleteVoiceDe
 // Realm File Upload
 let fileController = new FileController();
 Router.post('/upload', fileController.uploadRequest);
+Router.get('/download', fileController.downloadRequest);
 
 module.exports = Router;

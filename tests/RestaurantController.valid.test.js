@@ -6,6 +6,7 @@ chai.use(require('chai-http'));
 
 let api = require('../app.js');
 var restaurantId;
+let accountId = '9b9ec7df-fd11-4bf9-982b-e82fe83d4624';
 
 describe('Restaurant with valid data', function () {
     this.timeout(1000);
@@ -13,9 +14,10 @@ describe('Restaurant with valid data', function () {
         return chai.request(api)
             .post('/restaurant')
             .type('form')
+            .set('content-type', 'application/json')
             .send({
                 name: 'Zur goldenen Möwe',
-                accountId: '9b9ec7df-fd11-4bf9-982b-e82fe83d4624',
+                accountId: accountId,
                 street: 'Storkower Straße 205a',
                 postCode: '10369',
                 city: 'Berlin',
@@ -26,43 +28,44 @@ describe('Restaurant with valid data', function () {
                 restaurantId = res.body.id;
             });
     });
-    // it('GET /accounts', function () {
-    //     return chai.request(api)
-    //         .get('/accounts')
-    //         .then(res => {
-    //             expect(res).to.have.status(200);
-    //             expect(res).to.be.json;
-    //             expect(res.body).to.be.an('array');
-    //             checkAccountObject(res.body[0]);
-    //             expect(res.body.error).not.to.exist;
-    //         });
-    // });
-    // it('GET /account', function () {
-    //     return chai.request(api)
-    //         .get('/account/' + accountId)
-    //         .then(res => {
-    //             checkAccountResponse(res);
-    //         });
-    // });
-    // it('PUT /account', function () {
-    //     return chai.request(api)
-    //         .put('/account/' + accountId)
-    //         .type('form')
-    //         .send({
-    //             password: 'NEUESpassword123'
-    //         })
-    //         .then(res => {
-    //             checkAccountResponse(res);
-    //             expect(res.body.password).to.be.equal('NEUESpassword123');
-    //         });
-    // });
-    // it('DELETE /account', function () {
-    //     return chai.request(api)
-    //         .delete('/account/' + accountId)
-    //         .then(res => {
-    //             checkAccountResponse(res);
-    //         });
-    // });
+    it('GET /restaurants', function () {
+        return chai.request(api)
+            .get('/restaurants?accountId=' + accountId)
+            .then(res => {
+                expect(res).to.have.status(200);
+                expect(res).to.be.json;
+                expect(res.body).to.be.an('array');
+                checkRestaurantObject(res.body[0]);
+                expect(res.body.error).not.to.exist;
+            });
+    });
+    it('GET /restaurant', function () {
+        return chai.request(api)
+            .get('/restaurant/' + restaurantId)
+            .then(res => {
+                checkRestaurantResponse(res);
+            });
+    });
+    it('PUT /restaurant', function () {
+        return chai.request(api)
+            .put('/restaurant/' + restaurantId)
+            .type('form')
+            .set('content-type', 'application/json')
+            .send({
+                name: 'Mikas Pommesbude'
+            })
+            .then(res => {
+                checkRestaurantResponse(res);
+                expect(res.body.name).to.be.equal('Mikas Pommesbude');
+            });
+    });
+    it('DELETE /restaurant', function () {
+        return chai.request(api)
+            .delete('/restaurant/' + restaurantId)
+            .then(res => {
+                checkRestaurantResponse(res);
+            });
+    });
 });
 
 function checkRestaurantResponse(res) {
