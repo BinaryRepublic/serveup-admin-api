@@ -24,8 +24,7 @@ class FileController {
         });
     };
     downloadRequest (req, res) {
-        var file = path.join('../../DataRealm', 'default.realm');
-        res.download(file);
+        res.download('./DataRealm/default.realm');
     }
 }
 module.exports = FileController;
