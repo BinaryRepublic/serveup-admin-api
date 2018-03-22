@@ -1,7 +1,7 @@
 'use strict';
 
 const ParentRealmController = require('../../ro-realm/ParentRealmController');
-const RequestValidator = require('./RequestValidator');
+const RequestValidator = require('../middleware/controllerRequestValidator');
 
 class APIController {
     constructor () {
