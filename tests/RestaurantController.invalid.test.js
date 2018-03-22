@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -12,7 +12,7 @@ describe('Restaurant with invalid data', function () {
         return chai.request(api)
             .post('/restaurant')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({})
             .catch(err => err.response)
             .then(res => {
@@ -22,6 +22,7 @@ describe('Restaurant with invalid data', function () {
     it('GET /restaurants', function () {
         return chai.request(api)
             .get('/restaurants')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 expect(res).to.have.status(400);
@@ -34,6 +35,7 @@ describe('Restaurant with invalid data', function () {
     it('GET /restaurant', function () {
         return chai.request(api)
             .get('/restaurant/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidRestaurantIdResponse(res);
@@ -43,7 +45,7 @@ describe('Restaurant with invalid data', function () {
         return chai.request(api)
             .put('/restaurant/dasdu23urhas9da72easdau3j')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 password: undefined
             })
@@ -55,6 +57,7 @@ describe('Restaurant with invalid data', function () {
     it('DELETE /restaurant', function () {
         return chai.request(api)
             .delete('/restaurant/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidRestaurantIdResponse(res);

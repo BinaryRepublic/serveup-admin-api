@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -12,7 +12,7 @@ describe('Account with invalid data', function () {
         return chai.request(api)
             .post('/account')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 mail: 'restaurant-order@code.berlin',
                 firstName: 'Max',
@@ -31,6 +31,7 @@ describe('Account with invalid data', function () {
     it('GET /accounts', function () {
         return chai.request(api)
             .get('/accounts')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
@@ -40,6 +41,7 @@ describe('Account with invalid data', function () {
     it('GET /account', function () {
         return chai.request(api)
             .get('/account/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidAccountIdResponse(res);
@@ -49,7 +51,7 @@ describe('Account with invalid data', function () {
         return chai.request(api)
             .put('/account/dasdu23urhas9da72easdau3j')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 password: undefined
             })
@@ -61,6 +63,7 @@ describe('Account with invalid data', function () {
     it('DELETE /account', function () {
         return chai.request(api)
             .delete('/account/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidAccountIdResponse(res);

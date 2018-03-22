@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -14,7 +14,7 @@ describe('Restaurant with valid data', function () {
         return chai.request(api)
             .post('/restaurant')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 name: 'Zur goldenen Möwe',
                 accountId: accountId,
@@ -31,6 +31,7 @@ describe('Restaurant with valid data', function () {
     it('GET /restaurants', function () {
         return chai.request(api)
             .get('/restaurants?accountId=' + accountId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
@@ -42,6 +43,7 @@ describe('Restaurant with valid data', function () {
     it('GET /restaurant', function () {
         return chai.request(api)
             .get('/restaurant/' + restaurantId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 checkRestaurantResponse(res);
             });
@@ -50,7 +52,7 @@ describe('Restaurant with valid data', function () {
         return chai.request(api)
             .put('/restaurant/' + restaurantId)
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 name: 'Mikas Pommesbude'
             })
@@ -62,6 +64,7 @@ describe('Restaurant with valid data', function () {
     it('DELETE /restaurant', function () {
         return chai.request(api)
             .delete('/restaurant/' + restaurantId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 checkRestaurantResponse(res);
             });

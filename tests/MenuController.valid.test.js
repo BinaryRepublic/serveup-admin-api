@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -13,8 +13,7 @@ describe('Menu with valid data', function () {
     it('POST /menu with drinks', function () {
         return chai.request(api)
             .post('/menu')
-            .type('form')
-            .set('content-type', 'application/json')
+            .set({'Access-Token': 'unittest'})
             .send({
                 restaurantId: restaurantId,
                 name: 'Saisonkarte',
@@ -75,7 +74,7 @@ describe('Menu with valid data', function () {
         return chai.request(api)
             .post('/menu')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 restaurantId: restaurantId,
                 name: 'Saisonkarte'
@@ -88,7 +87,7 @@ describe('Menu with valid data', function () {
         return chai.request(api)
             .post('/menu/validate')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 restaurantId: restaurantId,
                 name: 'Saisonkarte',
@@ -150,6 +149,7 @@ describe('Menu with valid data', function () {
     it('GET /menus', function () {
         return chai.request(api)
             .get('/menus?restaurantId=' + restaurantId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
@@ -161,6 +161,7 @@ describe('Menu with valid data', function () {
     it('GET /menu', function () {
         return chai.request(api)
             .get('/menu/' + menuId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkMenuResponse(res);
@@ -169,6 +170,7 @@ describe('Menu with valid data', function () {
     it('PUT /menu', function () {
         return chai.request(api)
             .put('/menu/' + menuId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .type('form')
             .send({
                 name: 'Tageskarte'
@@ -181,6 +183,7 @@ describe('Menu with valid data', function () {
     it('DELETE /menu', function () {
         return chai.request(api)
             .delete('/menu/' + menuId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 checkMenuResponse(res);
             });

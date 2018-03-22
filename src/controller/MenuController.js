@@ -75,7 +75,7 @@ class MenuController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validBody, function () {
-            let authorization = that.authorization.request(req.accountId, 'Restaurant', req.body.restaurantId);
+            let authorization = that.authorization.request(req.accountId, 'RestaurantId', req.body.menuId);
             if (authorization && !authorization.error) {
                 var result = that.realmController.validateMenu(req.body);
                 if (result === true) {
@@ -94,12 +94,7 @@ class MenuController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            let authorization = that.authorization.request(req.accountId, 'Menu', req.params.menuId);
-            if (authorization && !authorization.error) {
-                return that.realmController.updateMenu(req.params.menuId, req.body);
-            } else {
-                return authorization;
-            }
+            return that.realmController.updateMenu(req.params.menuId, req.body);
         }, res);
     };
     deleteMenu (req, res) {
@@ -108,12 +103,7 @@ class MenuController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            let authorization = that.authorization.request(req.accountId, 'Menu', req.params.menuId);
-            if (authorization && !authorization.error) {
-                return that.realmController.deleteMenu(req.params.menuId);
-            } else {
-                return authorization;
-            }
+            return that.realmController.deleteMenu(req.params.menuId);
         }, res);
     };
 }
