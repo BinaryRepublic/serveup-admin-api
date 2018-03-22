@@ -2,7 +2,6 @@
 
 const APIController = require('./APIController');
 const RealmAccountController = require('../../ro-realm/controller/RealmAccountController');
-const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
 const AuthApiInterface = require('../library/AuthApiInterface');
 
@@ -12,7 +11,6 @@ class AuthController extends APIController {
     constructor () {
         super();
         this.realmAccount = new RealmAccountController();
-        this.realmVoiceDevice = new RealmVoiceDeviceController();
         this.login = this.login.bind(this);
         this.authApi = new AuthApiInterface();
     };
