@@ -13,8 +13,6 @@ class Authorization {
         this.realmOrderController = new RealmOrderController();
         this.realmRestaurantController = new RealmRestaurantController();
         this.realmVoiceDeviceController = new RealmVoiceDeviceController();
-
-        this.authorization = new Authorization();
     }
     request (accountId, requestClassName, requestId) {
         if (accountId === 'root') {
