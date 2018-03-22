@@ -6,6 +6,8 @@ const RealmRestaurantController = require('../../ro-realm/controller/RealmRestau
 const RealmMenuController = require('../../ro-realm/controller/RealmMenuController');
 const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
+const Authorization = require('../middleware/controllerAuthorization');
+
 class AccountController extends APIController {
     constructor () {
         super();
@@ -13,6 +15,9 @@ class AccountController extends APIController {
         this.realmRestaurantController = new RealmRestaurantController();
         this.realmMenuController = new RealmMenuController();
         this.realmVoiceDeviceController = new RealmVoiceDeviceController();
+
+        this.authorization = new Authorization();
+
         this.getAccounts = this.getAccounts.bind(this);
         this.getAccountById = this.getAccountById.bind(this);
         this.postAccount = this.postAccount.bind(this);
@@ -22,7 +27,12 @@ class AccountController extends APIController {
     getAccounts (req, res) {
         let that = this;
         this.handleRequest(false, function () {
-            return that.realmController.getAccounts();
+            let authorization = that.authorization.request(req.accountId, 'Account', false);
+            if (authorization && !authorization.error) {
+                return that.realmController.getAccounts();
+            } else {
+                return authorization;
+            }
         }, res);
     };
     getAccountById (req, res) {
@@ -31,7 +41,12 @@ class AccountController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            return that.realmController.getAccountById(req.params.accountId);
+            let authorization = that.authorization.request(req.accountId, 'Account', req.params.accountId);
+            if (authorization && !authorization.error) {
+                return that.realmController.getAccountById(req.params.accountId);
+            } else {
+                return authorization;
+            }
         }, res);
     };
     postAccount (req, res) {
@@ -48,7 +63,12 @@ class AccountController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validBody, function () {
-            return that.realmController.createAccount(req.body);
+            let authorization = that.authorization.request(req.accountId, 'Account', false);
+            if (authorization && !authorization.error) {
+                return that.realmController.createAccount(req.body);
+            } else {
+                return authorization;
+            }
         }, res);
     };
     putAccount (req, res) {
@@ -57,7 +77,12 @@ class AccountController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            return that.realmController.updateAccount(req.params.accountId, req.body);
+            let authorization = that.authorization.request(req.accountId, 'Account', req.params.accountId);
+            if (authorization && !authorization.error) {
+                return that.realmController.updateAccount(req.params.accountId, req.body);
+            } else {
+                return authorization;
+            }
         }, res);
     };
     deleteAccount (req, res) {
@@ -66,24 +91,29 @@ class AccountController extends APIController {
         ]);
         let that = this;
         this.handleRequest(validParams, function () {
-            let accountId = req.params.accountId;
-            // delete restaurants
-            let restaurants = that.realmRestaurantController.getRestaurantsByAccountId(accountId);
-            restaurants = that.realmRestaurantController.formatRealmObj(restaurants);
-            restaurants.forEach((restaurant) => {
-                // delete menus
-                let menus = that.realmMenuController.getMenuByRestaurantId(restaurant.id);
-                menus.forEach((menu) => {
-                    that.realmMenuController.deleteMenu(menu.id);
+            let authorization = that.authorization.request(req.accountId, 'Account', false);
+            if (authorization && !authorization.error) {
+                let accountId = req.params.accountId;
+                // delete restaurants
+                let restaurants = that.realmRestaurantController.getRestaurantsByAccountId(accountId);
+                restaurants = that.realmRestaurantController.formatRealmObj(restaurants);
+                restaurants.forEach((restaurant) => {
+                    // delete menus
+                    let menus = that.realmMenuController.getMenuByRestaurantId(restaurant.id);
+                    menus.forEach((menu) => {
+                        that.realmMenuController.deleteMenu(menu.id);
+                    });
+                    // delete voice devices
+                    let voiceDevices = that.realmVoiceDeviceController.getVoiceDevicesByRestaurantId(restaurant.id);
+                    voiceDevices.forEach((voiceDevice) => {
+                        that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
+                    });
+                    that.realmRestaurantController.deleteRestaurant(restaurant.id);
                 });
-                // delete voice devices
-                let voiceDevices = that.realmVoiceDeviceController.getVoiceDevicesByRestaurantId(restaurant.id);
-                voiceDevices.forEach((voiceDevice) => {
-                    that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
-                });
-                that.realmRestaurantController.deleteRestaurant(restaurant.id);
-            });
-            return that.realmController.deleteAccount(accountId);
+                return that.realmController.deleteAccount(accountId);
+            } else {
+                return authorization;
+            }
         }, res);
     }
 }
