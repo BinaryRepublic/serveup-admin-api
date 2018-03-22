@@ -29,13 +29,27 @@ class AuthController extends APIController {
             nvalues: ['']
         }]);
         this.handleRequest(reqValid, () => {
-            let account = this.realmAccount.objectsWithFilter('Account', 'mail == "' + req.body.mail + '" && password == "' + req.body.password + '"');
-            account = this.realmAccount.formatRealmObj(account)[0];
-            if (account !== undefined) {
+            let accountId;
+            // check if root login
+            if (req.body.mail === process.env.ROOT_USERNAME && req.body.password === process.env.ROOT_PASSWORD) {
+                accountId = 'root';
+            } else {
+                // user login
+                let account = this.realmAccount.objectsWithFilter('Account', 'mail == "' + req.body.mail + '" && password == "' + req.body.password + '"');
+                account = this.realmAccount.formatRealmObj(account)[0];
+                if (account) {
+                    accountId = account.id;
+                }
+            }
+            if (accountId) {
                 let newGrant = uuidv4();
-                this.authApi.grant(newGrant, account.id);
+                this.authApi.grant(newGrant, accountId).then(result => {
+                    // authentication successful
+                }).catch(err => {
+                    console.log(err);
+                });
                 return {
-                    accountId: account.id,
+                    accountId: accountId,
                     grant: newGrant
                 };
             }
