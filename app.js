@@ -7,12 +7,13 @@ const { createLogger, transports } = require('winston');
 const fileUpload = require('express-fileupload');
 
 const logger = createLogger({
+    level: 'info',
     transports: [
-        new transports.File({ filename: '/var/log/combined.log', level: 'info' })
+        new transports.Console({
+            handleExceptions: true
+        })
     ],
-    exceptionHandlers: [
-        new transports.File({ filename: '/var/log/exceptions.log' })
-    ]
+    exitOnError: false
 });
 logger.exitOnError = false;
 
