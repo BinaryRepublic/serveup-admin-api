@@ -3,15 +3,15 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const { createLogger, transports, winston } = require('winston');
+const { createLogger, transports } = require('winston');
 const fileUpload = require('express-fileupload');
 
 const logger = createLogger({
     transports: [
-        new transports.File({ filename: 'combined.log', level: 'info' })
+        new transports.File({ filename: '/var/log/combined.log', level: 'info' })
     ],
     exceptionHandlers: [
-        new transports.File({ filename: 'exceptions.log' })
+        new transports.File({ filename: '/var/log/exceptions.log' })
     ]
 });
 logger.exitOnError = false;
