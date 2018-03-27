@@ -30,7 +30,7 @@ module.exports = (req, res, next) => {
                 if (body && body.error) {
                     error = body.error;
                 }
-                res.status(400).json({
+                res.status(401).json({
                     error: error
                 });
             });

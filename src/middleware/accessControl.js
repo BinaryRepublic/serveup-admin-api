@@ -5,6 +5,11 @@ exports.main = function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     if (req.method === 'OPTIONS') {
         res.send(200);
+        // console.info(JSON.stringify({
+        //     requestPath: req.path,
+        //     requestMethod: 'options',
+        //     httpStatus: 200
+        // }));
     } else {
         next();
     }
