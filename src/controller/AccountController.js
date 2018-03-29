@@ -33,7 +33,7 @@ class AccountController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     getAccountById (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -47,7 +47,7 @@ class AccountController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     postAccount (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
@@ -69,7 +69,7 @@ class AccountController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     putAccount (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -83,7 +83,7 @@ class AccountController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     deleteAccount (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -114,7 +114,7 @@ class AccountController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     }
 }
 module.exports = AccountController;

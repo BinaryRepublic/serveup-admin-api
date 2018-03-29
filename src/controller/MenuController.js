@@ -29,7 +29,7 @@ class MenuController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     getMenu (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -43,7 +43,7 @@ class MenuController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     postMenu (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
@@ -64,7 +64,7 @@ class MenuController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     validateMenu (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
@@ -86,7 +86,7 @@ class MenuController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     putMenu (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -95,7 +95,7 @@ class MenuController extends APIController {
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.updateMenu(req.params.menuId, req.body);
-        }, res);
+        }, res, req);
     };
     deleteMenu (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -104,7 +104,7 @@ class MenuController extends APIController {
         let that = this;
         this.handleRequest(validParams, function () {
             return that.realmController.deleteMenu(req.params.menuId);
-        }, res);
+        }, res, req);
     };
 }
 module.exports = MenuController;

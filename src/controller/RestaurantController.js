@@ -32,7 +32,7 @@ class RestaurantController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     getRestaurant (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -46,7 +46,7 @@ class RestaurantController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     postRestaurant (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
@@ -65,7 +65,7 @@ class RestaurantController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     putRestaurant (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -79,7 +79,7 @@ class RestaurantController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     deleteRestaurant (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -109,7 +109,7 @@ class RestaurantController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
 }
 module.exports = RestaurantController;

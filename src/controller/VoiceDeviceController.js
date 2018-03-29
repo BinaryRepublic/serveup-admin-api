@@ -28,7 +28,7 @@ class VoiceDeviceController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     getVoiceDevice (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -42,7 +42,7 @@ class VoiceDeviceController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     postVoiceDevice (req, res) {
         let validBody = this.requestValidator.validRequestData(req.body, [
@@ -57,7 +57,7 @@ class VoiceDeviceController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     putVoiceDevice (req, res) {
         let validBody = this.requestValidator.validRequestData(req.params, [
@@ -71,7 +71,7 @@ class VoiceDeviceController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     };
     deleteVoiceDevice (req, res) {
         let validParams = this.requestValidator.validRequestData(req.params, [
@@ -85,7 +85,7 @@ class VoiceDeviceController extends APIController {
             } else {
                 return authorization;
             }
-        }, res);
+        }, res, req);
     }
 }
 module.exports = VoiceDeviceController;
