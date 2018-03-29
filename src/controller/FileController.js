@@ -1,7 +1,6 @@
 'use_strict';
 
-const path = require('path');
-const Authorization = require('../middleware/controllerAuthorization');
+const Authorization = require('../../ro-express-helper/middleware/Authorization');
 
 class FileController {
     constructor () {

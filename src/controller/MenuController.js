@@ -1,9 +1,9 @@
 'use strict';
 
-const APIController = require('./APIController');
+const APIController = require('../../ro-express-helper/controller/APIController');
 const RealmMenuController = require('../../ro-realm/controller/RealmMenuController');
 
-const Authorization = require('../middleware/controllerAuthorization');
+const Authorization = require('../../ro-express-helper/middleware/Authorization');
 
 class MenuController extends APIController {
     constructor () {

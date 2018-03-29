@@ -1,9 +1,9 @@
 'use strict';
 
-const APIController = require('./APIController');
+const APIController = require('../../ro-express-helper/controller/APIController');
 const RealmVoiceDeviceController = require('../../ro-realm/controller/RealmVoiceDeviceController');
 
-const Authorization = require('../middleware/controllerAuthorization');
+const Authorization = require('../../ro-express-helper/middleware/Authorization');
 
 class VoiceDeviceController extends APIController {
     constructor () {
