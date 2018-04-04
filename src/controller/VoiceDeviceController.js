@@ -24,7 +24,7 @@ class VoiceDeviceController extends APIController {
         this.handleRequest(validQueryParams, function () {
             let authorization = that.authorization.request(req.accountId, 'Restaurant', req.query.restaurantId);
             if (authorization && !authorization.error) {
-                return that.realmController.getVoiceDevicesByRestaurantId(req.query.restaurantId) || 'can not get voiceDevices (restaurantId: ' + req.query.restaurantId + ')';
+                return that.realmController.getVoiceDevicesByRestaurantId(req.query.restaurantId) || {error: 'can not get voiceDevices (restaurantId: ' + req.query.restaurantId + ')'};
             } else {
                 return authorization;
             }
@@ -38,7 +38,7 @@ class VoiceDeviceController extends APIController {
         this.handleRequest(validParams, function () {
             let authorization = that.authorization.request(req.accountId, 'VoiceDevice', req.params.voiceDeviceId);
             if (authorization && !authorization.error) {
-                return that.realmController.getVoiceDeviceById(req.params.voiceDeviceId) || 'can not get voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')';
+                return that.realmController.getVoiceDeviceById(req.params.voiceDeviceId) || {error: 'can not get voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')'};
             } else {
                 return authorization;
             }
@@ -53,7 +53,7 @@ class VoiceDeviceController extends APIController {
         this.handleRequest(validBody, function () {
             let authorization = that.authorization.request(req.accountId, 'Restaurant', req.body.restaurantId);
             if (authorization && !authorization.error) {
-                return that.realmController.createVoiceDevice(req.body.restaurantId, req.body) || 'can not create voiceDevice (restaurantId: ' + req.body.restaurantId + ')';
+                return that.realmController.createVoiceDevice(req.body.restaurantId, req.body) || {error: 'can not create voiceDevice (restaurantId: ' + req.body.restaurantId + ')'};
             } else {
                 return authorization;
             }
@@ -67,7 +67,7 @@ class VoiceDeviceController extends APIController {
         this.handleRequest(validBody, function () {
             let authorization = that.authorization.request(req.accountId, 'VoiceDevice', req.params.voiceDeviceId);
             if (authorization && !authorization.error) {
-                return that.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body) || 'can not update voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')';
+                return that.realmController.updateVoiceDevice(req.params.voiceDeviceId, req.body) || {error: 'can not update voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')'};
             } else {
                 return authorization;
             }
@@ -81,7 +81,7 @@ class VoiceDeviceController extends APIController {
         this.handleRequest(validParams, function () {
             let authorization = that.authorization.request(req.accountId, 'VoiceDevice', req.params.voiceDeviceId);
             if (authorization && !authorization.error) {
-                return that.realmController.deleteVoiceDevice(req.params.voiceDeviceId) || 'can not delete voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')';
+                return that.realmController.deleteVoiceDevice(req.params.voiceDeviceId) || {error: 'can not delete voiceDevice (voiceDeviceId: ' + req.params.voiceDeviceId + ')'};
             } else {
                 return authorization;
             }

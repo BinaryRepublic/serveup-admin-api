@@ -65,7 +65,7 @@ class AccountController extends APIController {
         this.handleRequest(validBody, function () {
             let authorization = that.authorization.request(req.accountId, 'Account', false);
             if (authorization && !authorization.error) {
-                return that.realmController.createAccount(req.body) || 'can not post account (mail: ' + req.body.mail + ')';
+                return that.realmController.createAccount(req.body) || {error: 'can not post account (mail: ' + req.body.mail + ')'};
             } else {
                 return authorization;
             }
@@ -79,7 +79,7 @@ class AccountController extends APIController {
         this.handleRequest(validParams, function () {
             let authorization = that.authorization.request(req.accountId, 'Account', req.params.accountId);
             if (authorization && !authorization.error) {
-                return that.realmController.updateAccount(req.params.accountId, req.body) || 'can not update account (id: ' + req.params.accountId + ')';
+                return that.realmController.updateAccount(req.params.accountId, req.body) || {error: 'can not update account (id: ' + req.params.accountId + ')'};
             } else {
                 return authorization;
             }
@@ -110,7 +110,7 @@ class AccountController extends APIController {
                     });
                     that.realmRestaurantController.deleteRestaurant(restaurant.id);
                 });
-                return that.realmController.deleteAccount(accountId) || 'can not delete account (id: ' + accountId + ')';
+                return that.realmController.deleteAccount(accountId) || {error: 'can not delete account (id: ' + accountId + ')'};
             } else {
                 return authorization;
             }

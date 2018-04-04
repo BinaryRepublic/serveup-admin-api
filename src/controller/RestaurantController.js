@@ -28,7 +28,7 @@ class RestaurantController extends APIController {
         this.handleRequest(validQueryParams, function () {
             let authorization = that.authorization.request(req.accountId, 'Account', req.query.accountId);
             if (authorization && !authorization.error) {
-                return that.realmController.getRestaurantsByAccountId(req.query.accountId) || 'can not get restaurants (accountId: ' + req.query.accountId + ')';
+                return that.realmController.getRestaurantsByAccountId(req.query.accountId) || {error: 'can not get restaurants (accountId: ' + req.query.accountId + ')'};
             } else {
                 return authorization;
             }
@@ -42,7 +42,7 @@ class RestaurantController extends APIController {
         this.handleRequest(validParams, function () {
             let authorization = that.authorization.request(req.accountId, 'Restaurant', req.params.restaurantId);
             if (authorization && !authorization.error) {
-                return that.realmController.getRestaurantById(req.params.restaurantId) || 'can not get restaurant (restaurantId: ' + req.params.restaurantId + ')';
+                return that.realmController.getRestaurantById(req.params.restaurantId) || {error: 'can not get restaurant (restaurantId: ' + req.params.restaurantId + ')'};
             } else {
                 return authorization;
             }
@@ -61,7 +61,7 @@ class RestaurantController extends APIController {
         this.handleRequest(validBody, function () {
             let authorization = that.authorization.request(req.accountId, 'Account', req.body.accountId);
             if (authorization && !authorization.error) {
-                return that.realmController.createRestaurant(req.body) || 'can not create restaurant (accountId: ' + req.body.accountId + ')';
+                return that.realmController.createRestaurant(req.body) || {error: 'can not create restaurant (accountId: ' + req.body.accountId + ')'};
             } else {
                 return authorization;
             }
@@ -75,7 +75,7 @@ class RestaurantController extends APIController {
         this.handleRequest(validParams, function () {
             let authorization = that.authorization.request(req.accountId, 'Restaurant', req.params.restaurantId);
             if (authorization && !authorization.error) {
-                return that.realmController.updateRestaurant(req.params.restaurantId, req.body) || 'can not update restaurant (restaurantId: ' + req.params.restaurantId + ')';
+                return that.realmController.updateRestaurant(req.params.restaurantId, req.body) || {error: 'can not update restaurant (restaurantId: ' + req.params.restaurantId + ')'};
             } else {
                 return authorization;
             }
@@ -105,7 +105,7 @@ class RestaurantController extends APIController {
                         that.realmVoiceDeviceController.deleteVoiceDevice(voiceDevice.id);
                     });
                 }
-                return that.realmController.deleteRestaurant(restaurantId) || 'can not delete restaurant (restaurantId: ' + restaurantId + ')';
+                return that.realmController.deleteRestaurant(restaurantId) || {error: 'can not delete restaurant (restaurantId: ' + restaurantId + ')'};
             } else {
                 return authorization;
             }
