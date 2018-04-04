@@ -15,4 +15,4 @@ app.use('/', require('./ro-express-helper/authRoutes'));
 app.use(require('./ro-express-helper/middleware/authentication'));
 app.use('/', require('./src/routes'));
 
-module.exports = app.listen(4000, () => console.log('Admin API running on port 4000'));
+module.exports = app.listen(4000);
