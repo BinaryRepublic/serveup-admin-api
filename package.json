@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "pm2 start app.js",
     "testdbsetup": "mkdir DataRealm && cp tests/mockData/db/default.realm DataRealm/default.realm",
-    "test": "npm run clean && npm run testdbsetup && mocha tests/**.test.js --exit && npm run clean",
+    "test": "npm run clean && npm run testdbsetup && TEST=true mocha tests/**.test.js --exit && npm run clean",
     "clean": "rm -rf DataRealm",
     "docker": "docker build -t ro/admin-api .",
     "sub": "git submodule update --remote",
@@ -20,10 +20,10 @@
   "author": "Henrik Engelbrink",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "eslint": "^4.16.0",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
-    "express-prom-bundle": "^3.3.0",
     "realm": "^2.2.4",
     "uuid": "^3.2.1"
   },

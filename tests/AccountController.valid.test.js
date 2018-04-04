@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -13,7 +13,7 @@ describe('Account with valid data', function () {
         return chai.request(api)
             .post('/account')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 mail: 'restaurant-order@code.berlin',
                 password: 'password123',
@@ -33,6 +33,7 @@ describe('Account with valid data', function () {
     it('GET /accounts', function () {
         return chai.request(api)
             .get('/accounts')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
@@ -44,6 +45,7 @@ describe('Account with valid data', function () {
     it('GET /account', function () {
         return chai.request(api)
             .get('/account/' + accountId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 checkAccountResponse(res);
             });
@@ -52,7 +54,7 @@ describe('Account with valid data', function () {
         return chai.request(api)
             .put('/account/' + accountId)
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 password: 'NEUESpassword123'
             })
@@ -64,6 +66,7 @@ describe('Account with valid data', function () {
     it('DELETE /account', function () {
         return chai.request(api)
             .delete('/account/' + accountId)
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .then(res => {
                 checkAccountResponse(res);
             });

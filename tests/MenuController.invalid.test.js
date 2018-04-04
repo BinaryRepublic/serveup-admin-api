@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -12,7 +12,7 @@ describe('Menu with invalid data', function () {
         return chai.request(api)
             .post('/menu')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({})
             .catch(err => err.response)
             .then(res => {
@@ -22,6 +22,7 @@ describe('Menu with invalid data', function () {
     it('GET /menus', function () {
         return chai.request(api)
             .get('/menus?restaurantId=dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 expect(res).to.have.status(500);
@@ -34,6 +35,7 @@ describe('Menu with invalid data', function () {
     it('GET /menu', function () {
         return chai.request(api)
             .get('/menu/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidMenuIdResponse(res);
@@ -42,8 +44,8 @@ describe('Menu with invalid data', function () {
     it('PUT /menu', function () {
         return chai.request(api)
             .put('/menu/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .type('form')
-            .set('content-type', 'application/json')
             .send({
                 name: 123
             })
@@ -55,6 +57,7 @@ describe('Menu with invalid data', function () {
     it('DELETE /menu', function () {
         return chai.request(api)
             .delete('/menu/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidMenuIdResponse(res);

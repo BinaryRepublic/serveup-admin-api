@@ -1,5 +1,5 @@
 'use strict';
- 
+
 const chai = require('chai');
 const expect = require('chai').expect;
 chai.use(require('chai-http'));
@@ -13,8 +13,7 @@ describe('VoiceDevice with invalid data', function () {
     it('POST /voiceDevice', function () {
         return chai.request(api)
             .post('/voiceDevice')
-            .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 restaurantId: restaurantId,
                 number: 2
@@ -27,6 +26,7 @@ describe('VoiceDevice with invalid data', function () {
     it('GET /voiceDevices', function () {
         return chai.request(api)
             .get('/voiceDevices?restaurantId=dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 expect(res).to.have.status(500);
@@ -39,6 +39,7 @@ describe('VoiceDevice with invalid data', function () {
     it('GET /voiceDevice', function () {
         return chai.request(api)
             .get('/voiceDevice/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidVoiceDeviceIdResponse(res);
@@ -48,7 +49,7 @@ describe('VoiceDevice with invalid data', function () {
         return chai.request(api)
             .put('/voiceDevice/dasdu23urhas9da72easdau3j')
             .type('form')
-            .set('content-type', 'application/json')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .send({
                 password: undefined
             })
@@ -60,6 +61,7 @@ describe('VoiceDevice with invalid data', function () {
     it('DELETE /voiceDevice', function () {
         return chai.request(api)
             .delete('/voiceDevice/dasdu23urhas9da72easdau3j')
+            .set({'Accept': 'application/json', 'Access-Token': 'unittest'})
             .catch(err => err.response)
             .then(res => {
                 checkInvalidVoiceDeviceIdResponse(res);
